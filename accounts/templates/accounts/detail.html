@@ -3,48 +3,61 @@
 
 {% block content %}
   <div class="container">
-    <section>
+    <section class="border mt-4 py-3 px-5">
       <!-- 프로필 -->
-      <h3 class="text-center">{{ user }}의 프로필</h3>
-      <div class="row">
+      <h3 class="text-center my-2">{{ user }}의 프로필</h3>
+      <div class="row my-2">
         <!-- 프로필 사진 / 팔로우-->
-        <div class="col-3">
-          <div class="d-flex flex-column">
-            <img class="w-100 rounded" src="{{ user.image.url }}" alt="{{ user.image }}">
-            {% if request.user != user %}
-              <a class="display-5" href="{% url 'accounts:follow' user.pk %}">
-                {% if request.user in user.followers.all %}
-                  <i class="bi bi-star-fill"></i>
+        <div class="col-sm-3 col-12">
+          <div class="d-flex flex-column align-items-center">
+            <img style="width:200; height:200;" class="rounded" src="" alt="프로필 사진 없음">
+            <div class="d-flex justify-content-center">
+              <div class="mx-1">
+                {% if request.user != user %}
+                  <a class="display-5" href="{% url 'accounts:follow' user.pk %}">
+                    {% if request.user in user.followers.all %}
+                      <i class="bi bi-star-fill"></i>
+                    {% else %}
+                      <i class="bi bi-star"></i>
+                    {% endif %}
+                  </a>
                 {% else %}
-                  <i class="bi bi-star"></i>
+                  <i class="bi bi-star-fill display-5"></i>
                 {% endif %}
-              </a>
-            {% else %}
-              <i class="bi bi-star-fill display-5"></i>
-            {% endif %}
-            <div class="d-flex flex-column align-items-center">
-              <span class="m-0">
-                following
-                {{ user.followings.count }}
-              </span>
-              <span>
-                follower
-                {{ user.followers.count }}
-              </span>
+              </div>
+              <div class="mx-1 d-flex flex-column align-items-center">
+                <span class="m-0">
+                  팔로잉
+                  {{ user.followings.count }}
+                </span>
+                <span>
+                  팔로워
+                  {{ user.followers.count }}
+                </span>
+              </div>
             </div>
           </div>
-          <!-- 프로필 정보 -->
-          <div class="col-9">
-            <dl class="row m-2">
-              <dt class="col-sm-3 text-center">유저 아이디</dt>
-              <dd class="col-sm-9">{{ user.username }}</dd>
-              <dt class="col-sm-3 text-center">이메일</dt>
-              <dd class="col-sm-9">{{ user.email }}</dd>
-              <dt class="col-sm-3 text-center">자기소개</dt>
-              <dd class="col-sm-9">{{ user.introduce }}</dd>
-              <dt class="col-sm-3 text-center">가입날짜</dt>
-              <dd class="col-sm-9">{{ user.date_joined }}</dd>
-            </dl>
+        </div>
+        <!-- 프로필 정보 -->
+        <div class="col-sm-9 col-12">
+          <dl class="row m-2">
+            <dt class="col-sm-3 text-center">유저 아이디</dt>
+            <dd class="col-sm-9">{{ user.username }}</dd>
+            <dt class="col-sm-3 text-center">이메일</dt>
+            <dd class="col-sm-9">{{ user.email }}</dd>
+            <dt class="col-sm-3 text-center">성</dt>
+            <dd class="col-sm-9">{{ user.last_name }}</dd>
+            <dt class="col-sm-3 text-center">이름</dt>
+            <dd class="col-sm-9">{{ user.first_name }}</dd>
+            <dt class="col-sm-3 text-center">상태메시지</dt>
+            <dd class="col-sm-9">{{ user.profile.status_message }}</dd>
+          </dl>
+          <div class="d-flex justify-content-end">
+            {% if request.user.is_authenticated %}
+              {% if request.user == user %}
+                <a class="btn btn-primary" href="{% url 'accounts:update' %}">프로필 수정</a>
+              {% endif %}
+            {% endif %}
           </div>
         </div>
         <!-- 작성글 / 작성댓글 / 좋아요 -->
@@ -53,10 +66,7 @@
           <div class="col-4"></div>
           <div class="col-4"></div>
         </div>
-      </section>
-      <!-- 스크랩 / 북마크 -->
-      <aside>
-        한식 중식 양식
-      </aside>
-    </div>
-  {% endblock %}
+      </div>
+    </section>
+  </div>
+{% endblock %}

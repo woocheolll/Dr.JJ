@@ -1,9 +1,43 @@
 {% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
 {% block content %}
+
 <div class='text-center'>
     <h1 class="mb-4">DETAIL페이지</h1>
-    <a href="{% url 'articles:update' %}" class="text-decoration-none"><h4>update</h4></a>
-  </div>
+    <a href="{% url 'articles:update' review.pk %}" class="text-decoration-none"><h4>update</h4></a>
+
+    <p>리뷰 제목 : {{ review.title }}</p>
+    <p>리뷰 내용 : {{ review.content }}</p>
+    <p>생성일 : {{ review.created_at }}</p>
+    <p>작성자 : {{ review.user }}</p>
+    <p>이미지 : {{ review.image }}</p>
+
+    {% if review.image %}
+      <img src="{{ review.image.url }}" alt="{{ review.image }}" width="400" height="300">
+    {% endif %}
+
+</div>
 
 <hr>
+
+{% if request.user.is_authenticated %}
+  <div>
+    <form action="" method="POST" class="w-100">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      {% bootstrap_button "저장" button_type="submit" button_class="btn-primary" %}
+    </form>
+  </div>
+{% endif %}
+
+{% for comment in review.comment_set.all %}
+  {{ comment.user }}
+  {{ comment.content }}
+{% endfor %}
+
+
+
+
+
 {% endblock %}

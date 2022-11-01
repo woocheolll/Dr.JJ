@@ -32,3 +32,9 @@ class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # 점수 1-5점만 부여할수있게 설정
     grade = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+
+class Comment(models.Model):
+    content = models.TextField()
+    article = models.ForeignKey(Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

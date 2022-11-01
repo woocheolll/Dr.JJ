@@ -2,8 +2,39 @@
 {% block content %}
 <div class='text-center'>
     <h1 class="mb-4">인덱스페이지</h1>
-
 <a href="{% url 'articles:create' %}" class="text-decoration-none"><h4>CREATE</h4></a>
 </div>
+
+<!-- 리뷰가 없으면 -->
+{% if reviews %}
+{% else %}
+  <h1> 글이 없습니다. 작성해 주세요.  </h1>
+{% endif %}
+
+<!-- 리뷰가 있으면 -->
+{% for review in reviews %}
+  <div class="col-4 my-3">
+    <a href="{% url 'articles:detail' review.pk %}" class="text-decoration-none text-black">
+      <div class="card shadow p-3 mb-5 bg-body rounded card-hover">
+        {% if review.image %}
+          <img src="{{ review.thumbnail.url }}">
+        {% else %}
+          <img src="https://dummyimage.com/600x400/000/fff.png" class="card-img-top">
+        {% endif %}
+        <div class="card-body">
+          <p class="card-title my-1 fs-2">{{ review.title }}</p>
+          <p class="bi bi-star-fill text-warning"> {{ review.grade }}</p>
+          <p class="my-1 fs-3"> {{ review.user.username }} </p> 
+          
+        </div>
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+
+
+
+
+
 <hr>
 {% endblock %}

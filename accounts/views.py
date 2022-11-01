@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from .forms import CustomUserCreationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -70,3 +70,10 @@ def changePassword(request):
         "form": form,
     }
     return render(request, "accounts/changepassword.html", context)
+
+def detail(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    context = {
+        'user': user
+    }
+    return render(request, 'accounts/detail.html', context)

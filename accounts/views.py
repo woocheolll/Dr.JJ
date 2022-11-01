@@ -1,12 +1,15 @@
-from django.shortcuts import render,redirect, get_object_or_404
-from .forms import CustomUserCreationForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm
-from django.contrib.auth import get_user_model,update_session_auth_hash
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import User
+
+
+from django.http import JsonResponse
+
 
 # Create your views here.
 def signup(request):
@@ -23,18 +26,18 @@ def signup(request):
     }
     return render(request, "accounts/signup.html", context)
 
+
 def login(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect('accounts:index')
+            return redirect("accounts:index")
     else:
         form = AuthenticationForm()
-    context = {
-        'form':form
-    }
-    return render(request, 'accounts/login.html',context)
+    context = {"form": form}
+    return render(request, "accounts/login.html", context)
+
 
 @login_required
 def logout(request):
@@ -50,12 +53,14 @@ def index(request):
     }
     return render(request, "accounts/index.html", context)
 
+
 @login_required
 def delete(request):
     request.user.delete()
     auth_logout(request)
     messages.warning(request, "탈퇴되었습니다.")
     return redirect("accounts:index")
+
 
 @login_required
 def changePassword(request):
@@ -72,23 +77,50 @@ def changePassword(request):
     }
     return render(request, "accounts/changepassword.html", context)
 
+
 def detail(request, user_pk):
     user = get_object_or_404(get_user_model(), pk=user_pk)
-    images = User.objects.get(pk=user_pk)
-    context = {
-        'user': user,
-        'images':images
-    }
+
+    context = {"user": user}
+
     return render(request, "accounts/detail.html", context)
 
+
 @login_required
-def follow(request, user_pk):
-    user = get_user_model().objects.get(pk=user_pk)
-    if request.user == user:
-        messages.warning(request, '스스로 팔로우 할 수 없습니다.')
-        return redirect('accounts:detail', user_pk)
-    if request.user in user.followers.all():
-        user.followers.remove(request.user)
+def update(request):
+    if request.method == "POST":
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect("accounts:detail", request.user.pk)
     else:
-        user.followers.add(request.user)
-    return redirect("accounts:detail", user_pk)
+        form = CustomUserChangeForm(instance=request.user)
+    context = {
+        "form": form,
+    }
+    return render(request, "accounts/update.html", context)
+
+
+@login_required
+def follow(request, pk):
+    if request.user.is_authenticated:
+        person = get_object_or_404(get_user_model(), pk=pk)
+        if request.user == person:
+            messages.warning(request, "스스로 팔로우를 할 수 없습니다.")
+            return redirect("accounts:detail", pk)
+            # if request.user.followings.filter(pk=user_pk).exists():
+        if person.followers.filter(pk=request.user.pk).exists():
+            person.followers.remove(request.user)
+            is_followed = False
+        else:
+            person.followers.add(request.user)
+            is_followed = True
+
+        data = {
+            "is_followed": is_followed,
+            "following_cnt": person.followings.count(),
+            "follower_cnt": person.followers.count(),
+        }
+
+        return JsonResponse(data)
+    return redirect("accounts:login")

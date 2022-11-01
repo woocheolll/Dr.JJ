@@ -3,10 +3,11 @@
 
 {% block content %}
   <div>
+    <h1>계정</h1>
     <ul>
       {% for user in users %}
         <li>
-          <p>{{user.username}}</p>
+          <a href="{% url 'accounts:detail' user.pk %}">{{user.username}}</a>
           <p>{{user.email}}</p>
         </li>
       {% endfor %}

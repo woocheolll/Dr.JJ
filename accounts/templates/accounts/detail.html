@@ -11,6 +11,27 @@
         <div class="col-3">
           <div class="d-flex flex-column">
             <img class="w-100 rounded" src="{{ user.image.url }}" alt="{{ user.image }}">
+            {% if request.user != user %}
+              <a class="display-5" href="{% url 'accounts:follow' user.pk %}">
+                {% if request.user in user.followers.all %}
+                  <i class="bi bi-star-fill"></i>
+                {% else %}
+                  <i class="bi bi-star"></i>
+                {% endif %}
+              </a>
+            {% else %}
+              <i class="bi bi-star-fill display-5"></i>
+            {% endif %}
+            <div class="d-flex flex-column align-items-center">
+              <span class="m-0">
+                following
+                {{ user.followings.count }}
+              </span>
+              <span>
+                follower
+                {{ user.followers.count }}
+              </span>
+            </div>
           </div>
           <!-- 프로필 정보 -->
           <div class="col-9">

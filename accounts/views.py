@@ -6,7 +6,10 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+
 from django.http import JsonResponse
+
 
 # Create your views here.
 def signup(request):
@@ -77,7 +80,9 @@ def changePassword(request):
 
 def detail(request, user_pk):
     user = get_object_or_404(get_user_model(), pk=user_pk)
+
     context = {"user": user}
+
     return render(request, "accounts/detail.html", context)
 
 

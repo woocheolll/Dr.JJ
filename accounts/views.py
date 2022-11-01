@@ -49,3 +49,9 @@ def index(request):
     }
     return render(request, "accounts/index.html", context)
 
+@login_required
+def delete(request):
+    request.user.delete()
+    auth_logout(request)
+    messages.warning(request, "탈퇴되었습니다.")
+    return redirect("accounts:index")

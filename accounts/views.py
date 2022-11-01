@@ -30,3 +30,11 @@ def login(request):
         'form':form
     }
     return render(request, 'accounts/login.html',context)
+
+
+def index(request):
+    users = get_user_model().objects.all()
+    context = {
+        "users": users,
+    }
+    return render(request, "accounts/index.html", context)

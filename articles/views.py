@@ -77,7 +77,7 @@ def comment_create(request, pk):
     comment_form = CommentForm(request.POST)
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
-        comment.review = review
+        comment.article = review
         comment.user = request.user
         comment.save()
     return redirect("articles:detail", review.pk)
@@ -118,8 +118,8 @@ def comment_update_complete(request, review_pk, comment_pk):
 
 
 @login_required
-def like(request, review_pk):
-    review = get_object_or_404(Review, pk=review_pk)
+def like(request, pk):
+    review = get_object_or_404(Review, pk=pk)
     # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
     # if review.like_users.filter(id=request.user.id).exists():
     if request.user in review.like_users.all():

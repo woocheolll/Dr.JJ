@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+
+{% block content %}
+  <div>
+    <ul>
+      {% for user in users %}
+        <li>
+          <p>{{user.username}}</p>
+          <p>{{user.email}}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock content %}

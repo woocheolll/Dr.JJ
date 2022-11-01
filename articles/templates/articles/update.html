@@ -14,7 +14,7 @@
   {% csrf_token %}
 
   {% bootstrap_form review_form %}
-
   {% bootstrap_button "저장" button_type="submit" button_class="btn-primary" %}
 </form>
-{% endblock %}
+<a href="{% url 'articles:index' %}" class="text-decoration-none" ">back</a>
+{% endblock  %}

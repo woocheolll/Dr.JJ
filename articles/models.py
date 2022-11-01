@@ -26,9 +26,9 @@ class Review(models.Model):
         format="JPEG",
         options={"quality": 80},
     )
-    # like_users = models.ManyToManyField(
-    #     settings.AUTH_USER_MODEL, related_name="like_review"
-    # )
+    like_users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="like_review"
+    )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     # 점수 1-5점만 부여할수있게 설정
     grade = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])

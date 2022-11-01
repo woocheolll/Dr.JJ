@@ -10,7 +10,9 @@
         <!-- 프로필 사진 / 팔로우-->
         <div class="col-3">
           <div class="d-flex flex-column">
-            <img class="w-100 rounded" src="{{ user.image.url }}" alt="{{ user.image }}">
+            {% if article.image %}
+             <img src="{{ user.image.url }}" alt="{{ user.image }}" width="400" height="300">
+            {% endif %}
             {% if request.user != user %}
               <a class="display-5" href="{% url 'accounts:follow' user.pk %}">
                 {% if request.user in user.followers.all %}
@@ -19,10 +21,7 @@
                   <i class="bi bi-star"></i>
                 {% endif %}
               </a>
-            {% else %}
-              <i class="bi bi-star-fill display-5"></i>
             {% endif %}
-            <div class="d-flex flex-column align-items-center">
               <span class="m-0">
                 following
                 {{ user.followings.count }}
@@ -31,32 +30,25 @@
                 follower
                 {{ user.followers.count }}
               </span>
-            </div>
           </div>
           <!-- 프로필 정보 -->
-          <div class="col-9">
-            <dl class="row m-2">
-              <dt class="col-sm-3 text-center">유저 아이디</dt>
-              <dd class="col-sm-9">{{ user.username }}</dd>
-              <dt class="col-sm-3 text-center">이메일</dt>
-              <dd class="col-sm-9">{{ user.email }}</dd>
-              <dt class="col-sm-3 text-center">자기소개</dt>
-              <dd class="col-sm-9">{{ user.introduce }}</dd>
-              <dt class="col-sm-3 text-center">가입날짜</dt>
-              <dd class="col-sm-9">{{ user.date_joined }}</dd>
-            </dl>
-          </div>
+          <p>이름 : {{user.last_name}} {{user.first_name}}</p>
+          
+          <p>이메일 : {{user.email}}</p>
+          
+        <div>
+          <h4>작성한 글</h4>
+          <p></p>
+          <p></p>
         </div>
-        <!-- 작성글 / 작성댓글 / 좋아요 -->
-        <div class="row">
-          <div class="col-4"></div>
-          <div class="col-4"></div>
-          <div class="col-4"></div>
+        <div>
+          <h4>작성한 댓글</h4>
+          <p></p>
+          <p></p>
         </div>
-      </section>
-      <!-- 스크랩 / 북마크 -->
-      <aside>
-        한식 중식 양식
-      </aside>
-    </div>
+        <div>
+          <h4>좋아요한 식당</h4>
+          <p></p>
+          <p></p>
+        </div>
   {% endblock %}

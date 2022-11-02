@@ -7,6 +7,10 @@ from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
+
+from django.http import JsonResponse
+
+
 # Create your views here.
 def signup(request):
     if request.method == "POST":
@@ -76,31 +80,47 @@ def changePassword(request):
 
 def detail(request, user_pk):
     user = get_object_or_404(get_user_model(), pk=user_pk)
+
     context = {"user": user}
+
     return render(request, "accounts/detail.html", context)
+
 
 @login_required
 def update(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('accounts:detail', request.user.pk)
+            return redirect("accounts:detail", request.user.pk)
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {
-        'form': form,
+        "form": form,
     }
-    return render(request, 'accounts/update.html', context)
+    return render(request, "accounts/update.html", context)
+
 
 @login_required
-def follow(request, user_pk):
-    user = get_user_model().objects.get(pk=user_pk)
-    if request.user == user:
-        messages.warning(request, "스스로 팔로우 할 수 없습니다.")
-        return redirect("accounts:detail", user_pk)
-    if request.user in user.followers.all():
-        user.followers.remove(request.user)
-    else:
-        user.followers.add(request.user)
-    return redirect("accounts:detail", user_pk)
+def follow(request, pk):
+    if request.user.is_authenticated:
+        person = get_object_or_404(get_user_model(), pk=pk)
+        if request.user == person:
+            messages.warning(request, "스스로 팔로우를 할 수 없습니다.")
+            return redirect("accounts:detail", pk)
+            # if request.user.followings.filter(pk=user_pk).exists():
+        if person.followers.filter(pk=request.user.pk).exists():
+            person.followers.remove(request.user)
+            is_followed = False
+        else:
+            person.followers.add(request.user)
+            is_followed = True
+
+        data = {
+            "is_followed": is_followed,
+            "following_cnt": person.followings.count(),
+            "follower_cnt": person.followers.count(),
+        }
+
+        return JsonResponse(data)
+    return redirect("accounts:login")

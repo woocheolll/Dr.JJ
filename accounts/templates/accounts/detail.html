@@ -36,6 +36,21 @@
           
           <p>이메일 : {{user.email}}</p>
           
+          {% if user.profile.image %}
+            <img src="{{ user.profile.image.url }}" alt="{{ user.profile.image }}" class='mb-2'>
+            {% else %}
+            <img src="{% static 'images/no_image.png' %}" alt="no-profile-image" class='mb-2'>
+            {% endif %}
+            {% if user.profile.status_message %}
+            <p class='fw-bold'>{{ user.profile.status_message }}</p>
+            {% endif %}
+            {% if request.user == user %}
+            <div>
+                <a href="{% url 'accounts:profile' request.user.pk %}" class='btn btn-outline-dark'>프로필 업데이트</a>
+            </div>
+          {% endif %}
+
+
         <div>
           <h4>작성한 글</h4>
           <p></p>

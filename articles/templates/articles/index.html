@@ -77,9 +77,9 @@
         <a href="{% url 'articles:detail' review.pk %}" class="text-decoration-none text-black">
           <div class="card shadow p-3 mb-5 bg-body rounded card-hover">
             {% if review.image %}
-              <img src="{{ review.thumbnail.url }}">
+              <img src="{{ review.image.url }}">
             {% else %}
-              <img src="https://dummyimage.com/600x400/000/fff.png" class="card-img-top">
+              <img src="https://dummyimage.com/1200x960/000000/c4c4c4" class="card-img-top">
             {% endif %}
             <div class="card-body">
               <p class="card-title my-1 fs-2">{{ review.title }}</p>
@@ -88,7 +88,6 @@
               <p class="my-1 fs-3">
                 {{ review.user.username }}
               </p>
-
             </div>
           </div>
         </a>

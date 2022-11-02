@@ -17,6 +17,7 @@ def index(request):
 
 
 def create(request):
+
     if request.method == "POST":
         form = ReviewForm(request.POST, request.FILES)
         print(request.POST)
@@ -29,6 +30,7 @@ def create(request):
     context = {
         "form": form,
     }
+
     return render(request, "articles/create.html", context)
 
 
@@ -141,5 +143,4 @@ def like(request, review_pk):
     }
 
     return JsonResponse(data)
-
 

@@ -3,8 +3,9 @@
 {% load static %}
 
 {% block content %}
-  <h1 class="text-center">게시판디테일</h1>
-  <div></div>
+<div class="m-4">
+  <h1 class="text-center p-3">게시판디테일</h1>
+
   <p style="font-size: 1.3rem">
     Title :
     {{ review.title }}</p>
@@ -46,7 +47,7 @@
       </button>
     {% endif %}
   </form>
-
+  
   {% if request.user.is_authenticated %}
     <form action="{% url 'free:comment_create' review.pk %}" method="POST">
       {% csrf_token %}
@@ -55,6 +56,7 @@
     </form>
   {% endif %}
   <hr>
+  <div class="p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px">
   {% for comment in comments %}
     <article class='comment-block-{{ comment.pk }}'>
       <p class='comment-{{ comment.pk }}-content-container'>
@@ -62,7 +64,7 @@
         |
           <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
       </p>
-      <div class="d-flex">
+      <div class="d-flex justify-content-end">
         <a href="{% url 'free:comment_update' review.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-review-pk='{{ review.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
         <form action="{% url 'free:comment_delete' review.pk comment.pk %}" method="POST" class="my-0">
           {% csrf_token %}
@@ -70,12 +72,15 @@
         </form>
       </div>
     </article>
-    <hr>
+    
     {% empty %}
     <p>아직 아무도 못본거라고 믿자,,</p>
   {% endfor %}
+  </div>
   <a href="{% url 'free:index' %}" class="text-decoration-none" >back</a>
+</div>
 {% endblock %}
+
 {% block js %}
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="{% static 'js/free/detail.js' %}"></script>

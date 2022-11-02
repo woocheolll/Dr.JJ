@@ -60,7 +60,7 @@
 
 {% for comment in comments %}
 <article class='comment-block-{{ comment.pk }}'>
-  {% comment %} <a href="{% url 'articles:comment_detail' comment.pk %}">   {% endcomment %}
+ 
   <div class="p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px">
   <p class='comment-{{ comment.pk }}-content-container'>
     {{ comment.user.username }}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5%}
+{% load static %}
+
+{% block content %}
+  <h1 class="text-center">게시판디테일</h1>
+  <div></div>
+  <p style="font-size: 1.3rem">
+    Title :
+    {{ review.title }}</p>
+  <p style="font-size: 1.3rem">
+    Writer :
+    <a class="text-decoration-none"  href={% url 'accounts:detail' review.user.pk %}>{{review.user}}</a>
+  </p>
+  
+  <p>{{ review.updated_at }}</p>
+  {% if review.image %}
+    <p><img src='{{ review.image.url }}' alt='{{ review.image }}' style="width: 100%; ">
+    </p>
+  {% endif %}
+
+  <p>content :
+    {{ review.content }}</p>
+  {% if request.user == review.user %}
+    <div class="d-flex align-items-start">
+      <p>
+        <a href="{% url 'free:update' review.pk %}" class="btn btn-outline-dark">수정</a>
+      </p>
+    {% endif %}
+    <form action="{% url 'free:delete' review.pk %}" method="POST">
+      {% csrf_token %}
+      <input type="submit" class="btn btn-outline-danger mx-2" value="삭제">
+    </form>
+  </div>
+
+  <form class='like-form' data-review-pk='{{ review.pk }}'>
+    {% csrf_token %}
+    <span class='like-cnt'>{{review.like_users.count}}</span>
+    {% if request.user in free.like_users.all %}
+      <button class="btn btn-link text-danger">
+        <i class="bi bi-heart-fill heart-icon"></i>
+      </button>
+    {% else %}
+      <button class="btn btn-link text-danger">
+        <i class="bi bi-heart heart-icon"></i>
+      </button>
+    {% endif %}
+  </form>
+
+  {% if request.user.is_authenticated %}
+    <form action="{% url 'free:comment_create' review.pk %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      <input class="bnt my-3"  type="submit" value="OK">
+    </form>
+  {% endif %}
+  <hr>
+  {% for comment in comments %}
+    <article class='comment-block-{{ comment.pk }}'>
+      <p class='comment-{{ comment.pk }}-content-container'>
+        {{ comment.user.username }}
+        |
+          <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
+      </p>
+      <div class="d-flex">
+        <a href="{% url 'free:comment_update' review.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-review-pk='{{ review.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
+        <form action="{% url 'free:comment_delete' review.pk comment.pk %}" method="POST" class="my-0">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-outline-danger mx-2" value="삭제">
+        </form>
+      </div>
+    </article>
+    <hr>
+    {% empty %}
+    <p>아직 아무도 못본거라고 믿자,,</p>
+  {% endfor %}
+  <a href="{% url 'free:index' %}" class="text-decoration-none" >back</a>
+{% endblock %}
+{% block js %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="{% static 'js/free/detail.js' %}"></script>
+{% endblock js %}

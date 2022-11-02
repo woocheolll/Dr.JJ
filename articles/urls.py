@@ -7,7 +7,7 @@ app_name = "articles"
 urlpatterns = [
     # articles 게시글
     path("", views.index, name="index"),
-    path("<int:pk>/create/", views.create, name="create"),
+    path("create/", views.create, name="create"),
     path("<int:pk>/", views.detail, name="detail"),
     path("<int:pk>/update/", views.update, name="update"),
     path("<int:pk>/delete/", views.delete, name="delete"),
@@ -28,10 +28,4 @@ urlpatterns = [
         name="comment_update_complete",
     ),
     path("<int:review_pk>/like/", views.like, name="like"),
-    path("<int:pk>/like/", views.like, name="like"),
-    path(
-        "<int:review_pk>/comments/<int:comment_pk>/comment_detail/",
-        views.comment_detail,
-        name="comment_detail",
-    ),
 ]

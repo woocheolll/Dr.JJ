@@ -14,7 +14,7 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
-def create(request,pk):
+def create(request):
     
     if request.method == "POST":
         form = ReviewForm(request.POST, request.FILES)

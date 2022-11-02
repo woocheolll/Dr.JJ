@@ -20,7 +20,7 @@
       {% endif %}
    
     <p>생성일 : {{ review.created_at }}</p>
-    <p>작성자 : <a class="text-decoration-none"  href={% url 'accounts:detail' review.user.pk %}>{{review.user}}</a></p>
+    <p>작성자 : <a class="text-decoration-none"  href="{% url 'accounts:detail' review.user.pk %}>{{review.user}}</a></p>
    
 
     {% if review.image %}

@@ -1,6 +1,6 @@
 from django.db import models
 from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill, Thumbnail
+from imagekit.processors import ResizeToFill
 from django.db import models
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -19,13 +19,7 @@ class Review(models.Model):
         format="JPEG",
         options={"quality": 80},
     )
-    thumbnail = ProcessedImageField(
-        upload_to="images/",
-        blank=True,
-        processors=[Thumbnail(200, 300)],
-        format="JPEG",
-        options={"quality": 80},
-    )
+
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="like_review"
     )

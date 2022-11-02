@@ -102,12 +102,12 @@ def update(request):
 
 
 @login_required
-def follow(request, pk):
+def follow(request, user_pk):
     if request.user.is_authenticated:
-        person = get_object_or_404(get_user_model(), pk=pk)
+        person = get_object_or_404(get_user_model(), pk=user_pk)
         if request.user == person:
             messages.warning(request, "스스로 팔로우를 할 수 없습니다.")
-            return redirect("accounts:detail", pk)
+            return redirect("accounts:detail", user_pk)
             # if request.user.followings.filter(pk=user_pk).exists():
         if person.followers.filter(pk=request.user.pk).exists():
             person.followers.remove(request.user)

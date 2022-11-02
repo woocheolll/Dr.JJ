@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+* {
+  font-family: 'Jua', sans-serif;
+}
+
+.box {
+  width: 250px;
+  height: 300px;
+  border: solid 1px;
+  background-color: rgb(253, 253, 253);
+  text-align: center;
+}
+
+.front {
+  position: relative;
+  top: -15px;
+  left: 10px;
+  transform: rotate(2deg);
+}
+
+.back {
+  margin: 3rem;
+}
+
+.grade {
+  font-family: 'Lobster', cursive;
+  color: red;
+  font-size: 3rem;
+}

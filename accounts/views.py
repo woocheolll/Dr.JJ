@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm, ProfileForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
-
+from accounts.models import Profile
 from django.http import JsonResponse
 
 
@@ -15,8 +14,11 @@ from django.http import JsonResponse
 def signup(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
+        profile = Profile()
         if form.is_valid():
             user = form.save()
+            profile.user = user
+            profile.save()
             auth_login(request, user)
             return redirect("accounts:index")
     else:
@@ -124,3 +126,19 @@ def follow(request, user_pk):
 
         return JsonResponse(data)
     return redirect("accounts:login")
+
+
+def profile(request, pk):
+    user = get_user_model().objects.get(pk=pk)
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect("accounts:detail", pk)
+    else:
+        form = ProfileForm(instance=request.user.profile)
+    context = {
+        "user": user,
+        "form": form,
+    }
+    return render(request, "accounts/profile.html", context)

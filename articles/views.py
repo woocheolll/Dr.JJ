@@ -143,8 +143,3 @@ def like(request, review_pk):
     return JsonResponse(data)
 
 
-@login_required
-def comment_detail(request, review_pk, comment_pk):
-    review = Review.objects.get(pk=review_pk)
-    comment = Comment.objects.get(pk=comment_pk)
-    return render(request)

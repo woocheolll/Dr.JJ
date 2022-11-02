@@ -23,7 +23,7 @@
     {% for review in question_list %}
         <tr>
             <th scope="row">{{review.pk}}</th>
-            <td><a href="{% url 'review:detail' review.pk%}" class="text-black fw-bold text-decoration-none">
+            <td><a href="{% url 'free:detail' review.pk%}" class="text-black fw-bold text-decoration-none">
                 {{review.title}}</td>
             <td><a href="{% url 'accounts:detail' review.user.pk%}" class="text-black fw-bold text-decoration-none">
                 {{review.user}}</td>

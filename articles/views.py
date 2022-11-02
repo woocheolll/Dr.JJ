@@ -15,6 +15,7 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
+
 def create(request):
 
     if request.method == "POST":
@@ -142,3 +143,4 @@ def like(request, review_pk):
     }
 
     return JsonResponse(data)
+

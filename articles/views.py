@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ReviewForm, CommentForm
 from .models import Review, Comment
-
-
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
@@ -17,18 +15,20 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
+
 def create(request):
     if request.method == "POST":
-        review_form = ReviewForm(request.POST, request.FILES)
-        if review_form.is_valid():
-            review = review_form.save(commit=False)
-            review.user = request.user
-            review.save()
-            return redirect("articles:detail", review.pk)
+        form = ReviewForm(request.POST, request.FILES)
+        print(request.POST)
+        if form.is_valid():
+            temp = form.save(commit=False)
+            temp.save()
+            return redirect("articles:index")
     else:
-        review_form = ReviewForm()
-    context = {"review_form": review_form}
-
+        form = ReviewForm()
+    context = {
+        "form": form,
+    }
     return render(request, "articles/create.html", context)
 
 
@@ -84,12 +84,14 @@ def comment_create(request, pk):
     return redirect("articles:detail", review.pk)
 
 
+@login_required
 def comment_delete(request, comment_pk, review_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment.delete()
     return redirect("articles:detail", review_pk)
 
 
+@login_required
 def comment_update(request, review_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
 
@@ -98,6 +100,7 @@ def comment_update(request, review_pk, comment_pk):
     return JsonResponse(data)
 
 
+@login_required
 def comment_update_complete(request, review_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_form = CommentForm(request.POST, instance=comment)
@@ -119,8 +122,8 @@ def comment_update_complete(request, review_pk, comment_pk):
 
 
 @login_required
-def like(request, pk):
-    review = get_object_or_404(Review, pk=pk)
+def like(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
     # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
     # if review.like_users.filter(id=request.user.id).exists():
     if request.user in review.like_users.all():
@@ -138,3 +141,10 @@ def like(request, pk):
     }
 
     return JsonResponse(data)
+
+
+@login_required
+def comment_detail(request, review_pk, comment_pk):
+    review = Review.objects.get(pk=review_pk)
+    comment = Comment.objects.get(pk=comment_pk)
+    return render(request)

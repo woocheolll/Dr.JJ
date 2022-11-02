@@ -3,6 +3,7 @@ from .forms import ReviewForm, CommentForm
 from .models import Review, Comment
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+
 # from django.db.models import Q
 
 # Create your views here.
@@ -14,8 +15,8 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
+
 def create(request):
-    
     if request.method == "POST":
         form = ReviewForm(request.POST, request.FILES)
         print(request.POST)
@@ -27,8 +28,7 @@ def create(request):
         form = ReviewForm()
     context = {
         "form": form,
-        }
-
+    }
     return render(request, "articles/create.html", context)
 
 

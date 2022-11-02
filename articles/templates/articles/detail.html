@@ -50,17 +50,18 @@
     <input class="bnt my-3"  type="submit" value="OK">
   </form>
 {% endif %}
-<br>
+<hr>
 {% if comments %}
 <p>
   <b>{{ comments|length }}개의 댓글이 있습니다.</b>
 </p>
-<br>
 {% endif %}
 <br>
 
 {% for comment in comments %}
 <article class='comment-block-{{ comment.pk }}'>
+  {% comment %} <a href="{% url 'articles:comment_detail' comment.pk %}">   {% endcomment %}
+  <div class="p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px">
   <p class='comment-{{ comment.pk }}-content-container'>
     {{ comment.user.username }}
     |
@@ -75,6 +76,7 @@
     </form>
   </div>
   {% endif %}
+</div></a>
 </article>
 <hr>
 {% empty %}

@@ -3,7 +3,7 @@
 {% load static %}
 {% block content %}
 
-<div class='text-center'>
+<div class='text-center m-3'>
     <h1 class="mb-4">DETAIL페이지</h1>
   
     <p>리뷰 제목 : {{ review.title }}</p>
@@ -20,7 +20,7 @@
       {% endif %}
    
     <p>생성일 : {{ review.created_at }}</p>
-    <p>작성자 : {{ review.user }}</p>
+    <p>작성자 : <a class="text-decoration-none"  href={% url 'accounts:detail' review.user.pk %}>{{review.user}}</a></p>
    
 
     {% if review.image %}

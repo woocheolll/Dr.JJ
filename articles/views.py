@@ -84,12 +84,14 @@ def comment_create(request, pk):
     return redirect("articles:detail", review.pk)
 
 
+@login_required
 def comment_delete(request, comment_pk, review_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment.delete()
     return redirect("articles:detail", review_pk)
 
 
+@login_required
 def comment_update(request, review_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
 
@@ -98,6 +100,7 @@ def comment_update(request, review_pk, comment_pk):
     return JsonResponse(data)
 
 
+@login_required
 def comment_update_complete(request, review_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_form = CommentForm(request.POST, instance=comment)

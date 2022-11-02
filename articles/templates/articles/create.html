@@ -4,12 +4,67 @@
 
 {% block content %}
 <div class='text-center'>
-    <h1>CREATE페이지</h1>
+    <h1>맛집등록</h1>
 </div>
-<form action='' method='POST' enctype='multipart/form-data'>
-    {% csrf_token %}
-    {% bootstrap_form review_form %}
-    <input type="submit" value="작성">
-</form>
+
+    <div name="box" class="container my-5">
+        <div id="map" style="width:500px;height:400px;"></div>
+        
+        <form name="mapform" action="" method="POST" ,="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3"><label class="form-label" for="id_hotplace">음식점</label><input type="text" name="title" maxlength="100" class="form-control" placeholder="음식점" required="" id="id_hotplace"></div>
+            <label for="id_addr" class="form-label">주소</label>
+            <div class="input-group mb-3">
+                <input name="addr" maxlength="80" type="text" class="form-control" placeholder="주소" id="id_addr" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button onclick="transform()" class="btn btn-primary" type="button" id="button-addon2">주소 확인</button>
+              </div>
+            <!-- <div class="mb-3"><label class="form-label" for="id_addr">Addr</label>
+                <input type="text" name="addr" maxlength="80" class="form-control" placeholder="Addr" required="" id="id_addr"> <button class="btn btn-primary my-3" onclick="transform()">주소확인</button>
+            </div> -->
+            <div class="mb-3"><label class="form-label" for="id_content">메뉴</label><input type="text" name="content" maxlength="80" class="form-control" placeholder="메뉴" required="" id="id_theme"></div>
+            <div class="mb-3"><label class="form-label" for="id_image">Image</label><input type="file" name="image" accept="image/*" class="form-control" id="id_image"></div>
+            <input name="x" type="hidden" value="">
+            <input name="y" type="hidden" value="">
+            <button class="btn btn-primary" type="submit">submit</button>
+        </form>
+    </div>
+        
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c262112c4811d99bb369cd08f0c8ef80&libraries=clusterer&libraries=services"></script>
+<script>
+    var mapContainer = document.getElementById('map'),
+        mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667),
+            level: 3
+        };  
+    var map = new kakao.maps.Map(mapContainer, mapOption); 
+    function transform() {
+        var geocoder = new kakao.maps.services.Geocoder();
+        var address = document.mapform.addr.value
+        geocoder.addressSearch(`${address}`, function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+                var latlng = marker.getPosition()
+                console.log(result)
+            document.mapform.x.value=latlng['La']
+            document.mapform.y.value=latlng['Ma']
+            
+            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            var infowindow = new kakao.maps.InfoWindow({
+                content: `'<div style="width:150px;text-align:center;padding:6px 0;">${result[0].address_name}</div>'`
+            });
+            infowindow.open(map, marker);
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setCenter(coords);
+        }   else {
+            alert('정확한 주소를 입력해 주세요.')
+        }
+    });    
+} 
+</script>
+
 <a href="{% url 'articles:index' %}" class="text-decoration-none" style="color: rgb(52, 46, 127);">back</a>
 {% endblock %}

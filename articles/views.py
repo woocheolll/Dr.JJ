@@ -1,11 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ReviewForm, CommentForm
 from .models import Review, Comment
-
-
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-
 # from django.db.models import Q
 
 # Create your views here.
@@ -17,17 +14,20 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
-def create(request):
+def create(request,pk):
+    
     if request.method == "POST":
-        review_form = ReviewForm(request.POST, request.FILES)
-        if review_form.is_valid():
-            review = review_form.save(commit=False)
-            review.user = request.user
-            review.save()
-            return redirect("articles:detail", review.pk)
+        form = ReviewForm(request.POST, request.FILES)
+        print(request.POST)
+        if form.is_valid():
+            temp = form.save(commit=False)
+            temp.save()
+            return redirect("articles:index")
     else:
-        review_form = ReviewForm()
-    context = {"review_form": review_form}
+        form = ReviewForm()
+    context = {
+        "form": form,
+        }
 
     return render(request, "articles/create.html", context)
 

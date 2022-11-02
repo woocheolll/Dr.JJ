@@ -7,7 +7,10 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class Review(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=80)
+    addr = models.CharField(max_length=80)
+    x = models.CharField(max_length=80, blank=False, null=False)
+    y = models.CharField(max_length=80, blank=False, null=False)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -23,9 +26,8 @@ class Review(models.Model):
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="like_review"
     )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    # 점수 1-5점만 부여할수있게 설정
-    grade = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    
+    
 
 
 class Comment(models.Model):

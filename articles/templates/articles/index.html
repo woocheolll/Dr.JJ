@@ -58,9 +58,9 @@
         <div class="w-100 my-auto mx-5">
           <h1>쩝쩝박사님 오늘의 메뉴는?</h1>
           <!-- 검색 폼 - 기능구현 X -->
-          <form class="d-flex" role="search">
-            <input class="form-control me-2 border-dark" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-dark" type="submit">Go</button>
+          <form action="{% url 'articles:search' %}" role='search' class='mb-0'>
+            <input type="search" id="mySearch" onkeyup="myFunction()" placeholder="메뉴 검색" title="Type in a category" class='ps-3 py-3' name='search'>
+            <input type="submit" class="btn  mx-2 ps-3 py-3" value="물어보기">
           </form>
         </div>
       </div>

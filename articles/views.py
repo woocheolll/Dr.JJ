@@ -15,6 +15,21 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
+def search(request):
+    search = request.GET.get("search")
+    if search:
+        reviews = Review.objects.filter(title__contains=search) | Review.objects.filter(
+            content__contains=search
+        )
+        context = {
+            "search": search,
+            "reviews": reviews,
+        }
+        return render(request, "articles/search.html", context)
+    else:
+        return redirect("articles:index")
+
+
 def create(request):
     if request.method == "POST":
         form = ReviewForm(request.POST, request.FILES)
@@ -116,7 +131,6 @@ def comment_update_complete(request, review_pk, comment_pk):
         data = {
             "comment_content": comment.content,
         }
-
         return JsonResponse(data)
 
     data = {

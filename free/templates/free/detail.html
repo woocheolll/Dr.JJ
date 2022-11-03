@@ -39,12 +39,12 @@
     <span class='like-cnt'>{{review.like_users.count}}</span>
     {% if request.user in free.like_users.all %}
       <button class="btn btn-link text-danger">
-        <i class="bi bi-heart heart-icon"></i>
+        <i class="bi bi-heart-fill heart-icon"></i>
       </button>
     {% else %}
-    <button class="btn btn-link text-danger">
-      <i class="bi bi-heart-fill heart-icon"></i>
-    </button>
+      <button class="btn btn-link text-danger">
+        <i class="bi bi-heart heart-icon"></i>
+      </button>
     {% endif %}
   </form>
   

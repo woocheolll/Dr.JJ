@@ -13,6 +13,12 @@
           {% csrf_token %}
           {% bootstrap_form form %}
           <div class="d-flex justify-content-end mt-5">
+            <div class="m-2">
+              {% load socialaccount %}
+              <a href=" {% provider_login_url 'google' %}">구글</a>
+              <a href=" {% provider_login_url 'naver' %}">네이버</a>
+              <a href=" {% provider_login_url 'kakao' %}">카카오</a>
+            </div>
             <input class="btn btn-dark" type="submit" value="출입 확인">
           </div>
           <img class="position-absolute bottom-0 start-0 my-3 mx-5" style="width:80px;" src="{%static 'images/enter.jpg' %}" alt="">

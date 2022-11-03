@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
+    path("accounts/", include("allauth.urls")),  # allauth의 기능을 accounts라는 주소 아래 담는다.
     path("", include("articles.urls")),
     path("free/", include("free.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

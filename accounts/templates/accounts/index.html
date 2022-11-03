@@ -1,16 +1,36 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% load static %}
 
 {% block content %}
-  <div>
-    <h1>계정</h1>
-    <ul>
-      {% for user in users %}
-        <li>
-          <a href="{% url 'accounts:detail' user.pk %}">{{user.username}}</a>
-          <p>{{user.email}}</p>
-        </li>
-      {% endfor %}
-    </ul>
+  <div class="container">
+    <div class="clip-board rounded-5 mx-auto my-5">
+      <div class="member p-5 position-relative">
+        <img class="position-absolute top-0 start-50 translate-middle" src="{%static 'images/clip.png' %}" alt="">
+        <h3 class="text-center mt-2 mb-4">계정</h3>
+        <table class="table text-center">
+          <thead>
+            <tr>
+              <th scope="col">No</th>
+              <th scope="col">유저</th>
+              <th scope="col">성</th>
+              <th scope="col">이름</th>
+              <th scope="col">이메일</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+            <tr>
+              <td>{{ user.pk }}</td>
+              <td><a href="{% url 'accounts:detail' user.pk %}">{{ user.username }}</a></td>
+              <td>{{ user.last_name}}</td>
+              <td>{{ user.first_name }}</td>
+              <td>{{user.email}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-{% endblock content %}
+{% endblock %}

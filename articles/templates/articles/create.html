@@ -40,6 +40,7 @@
     function transform() {
         var geocoder = new kakao.maps.services.Geocoder();
         var address = document.mapform.addr.value
+        var title = document.mapform.title.value
         geocoder.addressSearch(`${address}`, function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
                 var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -52,11 +53,10 @@
             document.mapform.x.value=latlng['La']
             document.mapform.y.value=latlng['Ma']
             
-            // 인포윈도우로 장소에 대한 설명을 표시합니다
             var infowindow = new kakao.maps.InfoWindow({
-                content: `'<div style="width:150px;text-align:center;padding:6px 0;">${result[0].address_name}</div>'`
+                
             });
-            infowindow.open(map, marker);
+            
             // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
             map.setCenter(coords);
         }   else {

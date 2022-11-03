@@ -28,3 +28,4 @@ urlpatterns = [
         name="comment_update_complete",
     ),
     path("<int:review_pk>/like/", views.like, name="like"),
+]

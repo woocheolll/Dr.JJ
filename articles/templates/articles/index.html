@@ -78,31 +78,34 @@
         <div class="col-12 col-sm-6 col-md-4 my-3">
           <div class="box back mx-auto">
             <a href="{% url 'articles:detail' review.pk %}" class="text-decoration-none text-black">
-            <div class="box front position-relative py-3 px-2">
-              <h5>Dr.JJ 보고서</h5>
-              <div class="d-flex flex-column align-items-center">
-              {% if review.image %}
-                <div class="img-card my-2 p-1">
-                  <div class="img-crop">
-                    <img class="w-100" src="{{ review.thumbnail.url }}">
+              <div class="box front position-relative py-3 px-2">
+                <h5>Dr.JJ 보고서</h5>
+                <div class="d-flex flex-column align-items-center">
+                <!-- 이미지 -->
+                {% if review.image %}
+                  <div class="img-card my-2 p-1">
+                    <img class="img-fit" src="{{ review.image.url }}">
                   </div>
+                {% else %}
+                  <div class="img-card my-2 p-1">
+                    <img class="img-fit" src="https://dummyimage.com/200x200/000/fff.png">
+                  </div>
+                {% endif %}
+                  <!-- 평점 평균 : 코드 추가 필요 -->
+                  <div class="m-2 position-absolute bottom-0 end-0">
+                    <span class="grade">A+</span>
+                  </div>
+                  <!-- 가게 정보 -->
+                  <dl class="row p-2">
+                    <dt class="col-4 text-center">이름:</dt>
+                    <dd class="col-8 text-start">{{ review.title }}</dd>
+                    <dt class="col-4 text-center">메뉴:</dt>
+                    <dd class="col-8 text-start">{{ review.content }}</dd>
+                    <dt class="col-4 text-center">주소:</dt>
+                    <dd class="col-8 text-start">{{ review.addr }}</dd>
+                  </dl>
                 </div>
-              {% else %}
-                <img class="img-card" src="https://dummyimage.com/600x400/000/fff.png">
-              {% endif %}
-                <div class="m-2 position-absolute bottom-0 end-0">
-                  <span class="grade">A+</span>
-                </div>
-                <dl class="row p-2">
-                  <dt class="col-4 text-center">이름:</dt>
-                  <dd class="col-8 text-start">{{ review.title }}</dd>
-                  <dt class="col-4 text-center">메뉴:</dt>
-                  <dd class="col-8 text-start">한식/양식..</dd>
-                  <dt class="col-4 text-center">주소:</dt>
-                  <dd class="col-8 text-start">ㅁㅁ시 ㅇㅇ동</dd>
-                </dl>
               </div>
-            </div>
             </a>
           </div>
         </div>

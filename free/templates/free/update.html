@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 {% load django_bootstrap5%}
 {% load static %}
 
@@ -8,7 +8,7 @@
 </div>
 <form action='' method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
-    {% bootstrap_form review_form %}
+    {% bootstrap_form free_form %}
     <input type="submit" class="bnt my-3"  value="수정">
 </form>
 <a href="{% url 'free:index' %}" class="text-decoration-none" >back</a>

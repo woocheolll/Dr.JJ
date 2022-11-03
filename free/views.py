@@ -77,12 +77,14 @@ def comment_create(request, pk):
     return redirect("free:detail", review.pk)
 
 
+@login_required
 def comment_delete(request, comment_pk, review_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment.delete()
     return redirect("free:detail", review_pk)
 
 
+@login_required
 def comment_update(request, free_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
 
@@ -91,6 +93,7 @@ def comment_update(request, free_pk, comment_pk):
     return JsonResponse(data)
 
 
+@login_required
 def comment_update_complete(request, free_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_form = CommentForm(request.POST, instance=comment)
@@ -137,14 +140,13 @@ def search(request):
     all_data = Review.objects.order_by("-pk")
     search = request.GET.get("search", "")
     page = request.GET.get("page", "1")  # 페이지
-    paginator = Paginator(all_data, 5)  # 페이지당 3개씩 보여주기
+    paginator = Paginator(all_data, 5)
     page_obj = paginator.get_page(page)
     if search:
         search_list = all_data.filter(
             Q(title__icontains=search)
             | Q(content__icontains=search)
             # | Q(user__icontains=search) #FK라서 검색불가
-            | Q(grade__icontains=search)
         )
         paginator = Paginator(search_list, 3)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)
@@ -158,4 +160,4 @@ def search(request):
             "question_list": page_obj,
         }
 
-    return render(request, "review/search.html", context)
+    return render(request, "free/search.html", context)

@@ -20,7 +20,7 @@
     {% if request.user == review.user %}
     <div class="d-flex">
 
-      <a href="{% url 'articles:update' review.pk %}" class="btn btn-outline-dark">수정</a>
+      <a href="{% url 'articles:update' review.pk %}" class="btn btn-outline-dark ">수정</a>
     
   <form action="{% url 'articles:delete' review.pk %}" method="POST">
     {% csrf_token %}

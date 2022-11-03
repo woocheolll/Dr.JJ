@@ -64,8 +64,8 @@
 <hr>
 <form class='like-form' data-review-pk='{{ review.pk }}'>
   {% csrf_token %}
-  <span class='like-cnt'>{{review.like_users.count}}</span>
-  {% if request.user in review.like_users.all %}
+  <span class='like-cnt'>{{review.like_art_users.count}}</span>
+  {% if request.user in review.like_art_users.all %}
     <button class="btn btn-link text-danger">
       <i class="bi bi-heart-fill heart-icon"></i>
     </button>

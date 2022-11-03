@@ -15,6 +15,7 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
+@login_required
 def create(request):
     if request.method == "POST":
         form = ReviewForm(request.POST, request.FILES)
@@ -131,18 +132,18 @@ def like(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
     # if review.like_users.filter(id=request.user.id).exists():
-    if request.user in review.like_users.all():
+    if request.user in review.like_art_users.all():
         # 좋아요 삭제하고
-        review.like_users.remove(request.user)
+        review.like_art_users.remove(request.user)
 
     else:
         # 좋아요 추가하고
-        review.like_users.add(request.user)
+        review.like_art_users.add(request.user)
 
     # 상세 페이지로 redirect
 
     data = {
-        "like_cnt": review.like_users.count(),
+        "like_cnt": review.like_art_users.count(),
     }
 
     return JsonResponse(data)

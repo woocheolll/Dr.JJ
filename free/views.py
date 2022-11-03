@@ -18,6 +18,7 @@ def index(request):
     return render(request, "free/index.html", context)
 
 
+@login_required
 def create(request):
     if request.method == "POST":
         review_form = ReviewForm(request.POST, request.FILES)

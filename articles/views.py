@@ -44,11 +44,12 @@ def create(request):
     context = {
         "form": form,
     }
+
     return render(request, "articles/create.html", context)
 
 
-def detail(request, pk):
-    review = Review.objects.get(pk=pk)
+def detail(request, review_pk):
+    review = Review.objects.get(pk=review_pk)
     if request.method == "POST":
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
@@ -64,7 +65,11 @@ def detail(request, pk):
         "review": review,
         "comments": review.comment_set.all(),
     }
-    return render(request, "articles/detail.html", context)
+    return render(
+        request,
+        "articles/detail.html",
+        context,
+    )
 
 
 def update(request, pk):
@@ -155,10 +160,3 @@ def like(request, review_pk):
     }
 
     return JsonResponse(data)
-
-
-@login_required
-def comment_detail(request, review_pk, comment_pk):
-    review = Review.objects.get(pk=review_pk)
-    comment = Comment.objects.get(pk=comment_pk)
-    return render(request)

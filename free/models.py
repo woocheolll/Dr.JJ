@@ -7,10 +7,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 class Review(models.Model):
-    title = models.CharField(max_length=80)
-    addr = models.CharField(max_length=80)
-    x = models.CharField(max_length=80, blank=False, null=False)
-    y = models.CharField(max_length=80, blank=False, null=False)
+    title = models.CharField(max_length=50)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -22,14 +19,20 @@ class Review(models.Model):
         format="JPEG",
         options={"quality": 80},
     )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like_users = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, related_name="like_review"
+        settings.AUTH_USER_MODEL, related_name="like_free"
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="user_free_review",
     )
 
 
 class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    article = models.ForeignKey(Review, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    free = models.ForeignKey(Review, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_free"
+    )

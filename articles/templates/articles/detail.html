@@ -20,7 +20,7 @@
       {% endif %}
    
     <p>생성일 : {{ review.created_at }}</p>
-    <p>작성자 : <a class="text-decoration-none"  href="{% url 'accounts:detail' review.user.pk %}>{{review.user}}</a></p>
+    <p>작성자 : <a class="text-decoration-none"  href={% url 'accounts:detail' review.user.pk %}>{{review.user}}</a></p>
    
 
     {% if review.image %}
@@ -28,7 +28,6 @@
     {% endif %}
 </div>
 <hr>
-<div class="p-4">
 <form class='like-form' data-review-pk='{{ review.pk }}'>
   {% csrf_token %}
   <span class='like-cnt'>{{review.like_users.count}}</span>
@@ -41,7 +40,6 @@
       <i class="bi bi-heart heart-icon"></i>
     </button>
   {% endif %}
-
 </form>
 {% if request.user.is_authenticated %}
   <form action="{% url 'articles:comment_create' review.pk %}" method="POST">
@@ -55,28 +53,27 @@
 <p>
   <b>{{ comments|length }}개의 댓글이 있습니다.</b>
 </p>
+<hr>
 {% endif %}
 <br>
-
 {% for comment in comments %}
 <article class='comment-block-{{ comment.pk }}'>
-  {% comment %} <a href="{% url 'articles:comment_detail' comment.pk %}">   {% endcomment %}
+
+ 
   <div class="p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px">
+
   <p class='comment-{{ comment.pk }}-content-container'>
     {{ comment.user.username }}
     |
       <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
   </p>
   <div class="d-flex">
-    {% if request.user == review.user %}
     <a href="{% url 'articles:comment_update' review.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-review-pk='{{ review.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
     <form action="{% url 'articles:comment_delete' review.pk comment.pk %}" method="POST" class="my-0">
       {% csrf_token %}
       <input type="submit" class="btn btn-outline-danger mx-2" value="삭제">
     </form>
   </div>
-  {% endif %}
-</div></a>
 </article>
 <hr>
 {% empty %}
@@ -84,7 +81,6 @@
 {% endfor %}
 <a href="{% url 'articles:index' %}" class="text-decoration-none" >back</a>
 {% endblock %}
-</div>
 
 {% block js %}
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

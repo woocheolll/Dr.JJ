@@ -10,7 +10,7 @@
     <div name="box" class="container my-5">
         <div id="map" style="width:500px;height:400px;"></div>
         
-        <form name="mapform" action="" method="POST" ,="" enctype="multipart/form-data">
+        <form name="mapform" action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3"><label class="form-label" for="id_hotplace">음식점</label><input type="text" name="title" maxlength="100" class="form-control" placeholder="음식점" required="" id="id_hotplace"></div>
             <label for="id_addr" class="form-label">주소</label>
@@ -66,5 +66,5 @@
 } 
 </script>
 
-<a href="{% url 'articles:index' %}" class="text-decoration-none" style="color: rgb(52, 46, 127);">back</a>
+<a href="{% url 'articles:index' %}" class="text-decoration-none" >back</a>
 {% endblock %}

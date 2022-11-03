@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load static %}
+{% block content %}
+<div class='text-center'>
+  <h1 class="mb-4">게시판검색</h1>
+</div>
+<hr>
+<br>
+  <div class="container ">
+    <table class="table mb-5 ">
+      <thead>
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">title</th>
+          <th scope="col">content</th>
+          <th scope="col">Grade</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% if question_list %}
+        {% for review in question_list %}
+          <tr>
+            <th scope="row">{{review.id}}</th>
+            <td>
+              <a href="{% url 'free:detail' review.pk%}" class="text-black fw-bold text-decoration-none">
+                {{review.title}}
+              </a>
+            </td>
+            <td>{{review.content}}</td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <ul class="pagination justify-content-center">
+      <!-- 이전페이지 -->
+      {% if question_list.has_previous %}
+      <li class="page-item">
+          <a class="page-link" href="?page={{ question_list.previous_page_number }}">prev</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">prev</a>
+      </li>
+      {% endif %}
+      <!-- 페이지리스트 -->
+      {% for page_number in question_list.paginator.page_range %}
+      {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
+      {% if page_number == question_list.number %}
+      <li class="page-item active" aria-current="page">
+          <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+      </li>
+      {% else %}
+      <li class="page-item">
+          <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+      </li>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+      <!-- 다음페이지 -->
+      {% if question_list.has_next %}
+      <li class="page-item">
+          <a class="page-link" href="?page={{ question_list.next_page_number }}">Next</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled">
+          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">Next</a>
+      </li>
+      {% endif %}
+  </ul>
+    {% endblock%}

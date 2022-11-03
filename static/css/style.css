@@ -24,6 +24,22 @@
   margin: 3rem;
 }
 
+.clip-board {
+  width: 676px;
+  min-height: 800px;
+  background-color: black;
+}
+
+.member {
+  position: relative;
+  top: 50px;
+  left: 50px;
+  width: 576px;
+  min-height: 700px;
+  border: solid 1px;
+  background-color: rgb(253, 253, 253);
+}
+
 .img-card {
   width: 120px;
   height: 120px;

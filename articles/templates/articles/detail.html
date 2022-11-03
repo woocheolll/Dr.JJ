@@ -98,6 +98,7 @@
       {{ comment.user.username }}
       |
       <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
+      <p>{{ comment.updated_at }}</p>
     </p>
     <div class="d-flex">
       {% if request.user == comment.user %}
@@ -105,8 +106,8 @@
       <form action="{% url 'articles:comment_delete' review.pk comment.pk %}" method="POST" class="my-0">
         {% csrf_token %}
         <input type="submit" class="btn btn-outline-danger mx-2" value="삭제">
-        {% endif %}
-    </form>
+      </form>
+      {% endif %}
   </div>
 </article>
 <hr>

@@ -65,7 +65,7 @@ commentUpdateBtns.forEach((commentUpdateBtn) => {
       console.log(commentUpdateCompleteForm)
       axios({
         method: 'post',
-        url: `/articles/${commentUpdateCompleteForm.dataset.reviewPk}/comments/${commentUpdateCompleteForm.dataset.commentPk}/update/complete/`,
+        url: `/${commentUpdateCompleteForm.dataset.reviewPk}/comments/${commentUpdateCompleteForm.dataset.commentPk}/update/complete/`,
         data: new FormData(commentUpdateCompleteForm),
         headers: { 'X-CSRFToken': csrftoken },
       }).then((response) => {

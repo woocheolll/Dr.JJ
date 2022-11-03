@@ -46,10 +46,10 @@
   border: solid 1px;
 }
 
-.img-crop {
+.img-fit {
   width: 110px;
   height: 110px;
-  overflow: hidden;
+  object-fit: cover;
 }
 
 .grade {

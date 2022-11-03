@@ -27,8 +27,6 @@ class Review(models.Model):
         settings.AUTH_USER_MODEL, related_name="like_review"
     )
 
-    
-
 
 class Comment(models.Model):
     content = models.TextField()

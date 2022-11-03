@@ -20,7 +20,8 @@
           <!-- 프로필 업데이트 -->
           {% if request.user == user %}
           <div class="d-flex justify-content-center m-3">
-            <a class="btn btn-dark" href="{% url 'accounts:profile' request.user.pk %}">프로필 업데이트</a>
+            <a class="btn btn-dark mx-1" href="{% url 'accounts:profile' request.user.pk %}">사진 등록</a>
+            <a class="btn btn-dark mx-1" href="{% url 'accounts:update' %}">정보 추가</a>
           </div>
           {% endif %}
         </div>

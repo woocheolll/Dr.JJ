@@ -79,3 +79,21 @@
   height: 200px;
   object-fit: cover;
 }
+
+.form-box {
+  max-width: 576px;
+  border: solid 1px;
+  background-color: rgb(253, 253, 253);
+}
+
+.form-card {
+  max-width: 576px;
+  min-height: 350px;
+  border: solid 1px;
+}
+
+.form-create {
+  max-width: 720px;
+  border: solid 1px;
+  background-color: rgb(253, 253, 253);
+}

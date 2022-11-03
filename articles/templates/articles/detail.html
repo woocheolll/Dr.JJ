@@ -34,16 +34,18 @@
 
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c262112c4811d99bb369cd08f0c8ef80&libraries=clusterer&libraries=services"></script>
   <script>
+  
+
   var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
       mapOption = { 
-          center: new kakao.maps.LatLng(37.4849849385326, 126.933588301198), // 지도의 중심좌표
+          center: new kakao.maps.LatLng(`{{ review.y }}`, `{{ review.x }}`), // 지도의 중심좌표
           level: 3 // 지도의 확대 레벨
       };
   
   var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
   // 마커가 표시될 위치입니다 
-  var markerPosition  = new kakao.maps.LatLng(37.4849849385326, 126.933588301198); 
+  var markerPosition  = new kakao.maps.LatLng(`{{ review.y }}`, `{{ review.x }}`); 
   
   // 마커를 생성합니다
   var marker = new kakao.maps.Marker({
@@ -64,8 +66,8 @@
 <hr>
 <form class='like-form' data-review-pk='{{ review.pk }}'>
   {% csrf_token %}
-  <span class='like-cnt'>{{review.like_users.count}}</span>
-  {% if request.user in review.like_users.all %}
+  <span class='like-cnt'>{{review.like_art_users.count}}</span>
+  {% if request.user in review.like_art_users.all %}
     <button class="btn btn-link text-danger">
       <i class="bi bi-heart-fill heart-icon"></i>
     </button>

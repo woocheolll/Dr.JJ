@@ -103,3 +103,22 @@
   min-height: 700px;
   background-color: rgb(253, 253, 253);
 }
+
+.free-banner {
+  height: 200px;
+}
+
+.free-banner-img {
+  object-fit: cover;
+}
+
+.link-btn {
+  line-height: 2;
+}
+
+.free-content {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

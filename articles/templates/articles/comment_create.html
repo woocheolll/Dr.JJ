@@ -6,10 +6,11 @@
 <div class='text-center'>
     <h1>CREATE</h1>
 </div>
+<form class="p-4 my-2" action="" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+{% bootstrap_form comment_form %}
+<div class="d-flex justify-content-end">
+  <input class="btn btn-dark" type="submit" value="작성">
+</form>
 
-    {% csrf_token %}
-    {% bootstrap_form comment_form %}
-    <input type="submit" value="작성">
-
-<a href="{% url 'articles:index' %}" class="text-decoration-none">back</a>
 {% endblock %}

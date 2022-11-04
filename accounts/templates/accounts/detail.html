@@ -20,6 +20,7 @@
           <!-- 프로필 업데이트 -->
           {% if request.user == user %}
           <div class="d-flex justify-content-center m-3">
+            <a class="btn btn-danger mx-1" href="{% url 'accounts:delete' %}"> 회원 탈퇴 </a>
             <a class="btn btn-dark mx-1" href="{% url 'accounts:profile' request.user.pk %}"> 정보 추가 </a>
           </div>
           {% endif %}

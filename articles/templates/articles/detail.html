@@ -2,121 +2,143 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block content %}
-<div class='container'>
-  <div class="d-flex justify-content-between">
-<div class='m-3'>
-    <h1 class="mb-4">DETAIL페이지</h1>
-    {% if review.image %}
-      <img src="{{ review.image.url }}" alt="{{ review.image }}" width="400" height="300">
-    {% endif %}
-  
-    <p>음식점 : {{ review.title }}</p>
-    <p>메뉴 :
-      {{ review.content }}</p>   
-    <p>주소 :
-        {{ review.addr }}</p>  
-    <p>생성일 : {{ review.created_at }}</p>
-    <p>작성자 : <a class="text-decoration-none"  href="{% url 'accounts:detail' review.user.pk %}">{{review.user}}</a></p>
-    {% if request.user == review.user %}
-    <div class="d-flex">
 
-      <a href="{% url 'articles:update' review.pk %}" class="btn btn-outline-dark">수정</a>
-    
-  <form action="{% url 'articles:delete' review.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" class="btn btn-outline-danger mx-2" value="삭제">
+<div class="container">
+  <div class="d-flex justify-content-evenly p-3">
+    <div>
+      <!-- 게시글 -->
+      <div class="report p-5">
+        <h1 class="text-center">{{ review.title }}</h1>
+        <h4 class="text-end">
+          작성자 : 
+          <a class="text-decoration-none" href="{% url 'accounts:detail' review.user.pk %}">
+            {{review.user}}
+          </a>
+        </h4>
+        <div class="row my-3">
+          <div class="col-sm-12 col-md-4 d-flex justify-content-center">
+            <!-- 가게 이미지 -->
+            {% if review.image %}
+            <img class="p-3 border border-dark" style="width:350;" src="{{ review.image.url }}" alt="{{ review.image }}">
+            {% else %}
+            <img class="p-3 border border-dark" style="width:350;" src="https://dummyimage.com/200x200/000/fff.png" alt="">
+            {% endif %}
+          </div>
+          <div class="col-sm-12 col-md-8 d-flex justify-content-center">
+            <!-- 가게 정보 -->
+            <div class="d-flex align-items-center">
+              <dl class="row m-3 align-items-center">
+                <dt class="col-4 text-center">상호명</dt>
+                <dd class="col-8">{{ review.title }}</dd>
+                <dt class="col-4 text-center">주소</dt>
+                <dd class="col-8">{{ review.addr }}</dd>
+                <dt class="col-4 text-center">전화번호</dt>
+                <dd class="col-8">000-0000</dd>
+                <dt class="col-4 text-center">웹사이트</dt>
+                <dd class="col-8">홈페이지/SNS</dd>
+                <dt class="col-4 text-center">분류</dt>
+                <dd class="col-8">{{ review.content }}</dd>
+                <dt class="col-4 text-center">추천메뉴</dt>
+                <dd class="col-8">커피 000원</dd>
+                <dt class="col-4 text-center">생성일</dt>
+                <dd class="col-8">{{ review.created_at|date:'Y-m-d' }}</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <!-- 수정 / 삭제 -->
+        {% if review.user == review.user %}
+        <div class="d-flex justify-content-end">
+          <a href="{% url 'articles:update' review.pk %}" class="btn btn-primary">수정</a>
+          <form class="m-0" action="{% url 'articles:delete' review.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger mx-2" value="삭제">
+          </form>
+        </div>
+        {% endif %}
+        <!-- 좋아요 -->
+        <hr>
+          <form class='like-form' data-review-pk='{{ review.pk }}'>
+            {% csrf_token %}
+            <span class='like-cnt'>{{review.like_art_users.count}}</span>
+            {% if request.user in review.like_art_users.all %}
+              <button class="btn btn-link text-danger">
+                <i class="bi bi-heart-fill heart-icon"></i>
+              </button>
+            {% else %}
+            <button class="btn btn-link text-danger">
+              <i class="bi bi-heart heart-icon"></i>
+            </button>
+            {% endif %}
+          </form>
+        <hr>
+        <!-- 코멘트 -->
+        {% if request.user.is_authenticated %}
+          <form action="{% url 'articles:comment_create' review.pk %}" method="POST">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            <input class="btn btn-dark my-3"  type="submit" value="OK">
+          </form>
+        {% endif %}
+        <hr>
+        {% if comments %}
+        <p><b>{{ comments|length }}개의 댓글이 있습니다.</b></p>
+        <hr>
+        {% endif %}
+        <br>
+        {% for comment in comments %}
+        <article class='comment-block-{{ comment.pk }}'>
+          <div class="p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px">
+            <p class='comment-{{ comment.pk }}-content-container'>
+              {{ comment.user.username }}
+              |
+                <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
+            </p>
+            <div class="d-flex">
+              <a href="{% url 'articles:comment_update' review.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-review-pk='{{ review.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
+              <form action="{% url 'articles:comment_delete' review.pk comment.pk %}" method="POST" class="my-0">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-outline-danger mx-2" value="삭제">
+              </form>
+            </div>
+          </div>
+        </article>
+        <hr>
+        {% empty %}
+          <p>아직 아무도 못본거라고 믿자,,</p>
+        {% endfor %}
+        <hr>
+        <!-- 뒤로가기 -->
+        <a href="{% url 'articles:index' %}" class="btn btn-dark text-decoration-none" >back</a>
+      </div>
+    </div>
+
+    <!-- side -->
+    <div class="bg-light">
+      <div class="">
+        <div id="map" style="width:300px;height:350px;"></div>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c262112c4811d99bb369cd08f0c8ef80&libraries=clusterer&libraries=services"></script>
+        <script>
+          var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+              mapOption = { 
+                  center: new kakao.maps.LatLng(`{{ review.y }}`, `{{ review.x }}`), // 지도의 중심좌표
+                  level: 3 // 지도의 확대 레벨
+              };
+          var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+          // 마커가 표시될 위치입니다 
+          var markerPosition  = new kakao.maps.LatLng(`{{ review.y }}`, `{{ review.x }}`); 
+          // 마커를 생성합니다
+          var marker = new kakao.maps.Marker({
+              position: markerPosition
+          });
+          // 마커가 지도 위에 표시되도록 설정합니다
+          marker.setMap(map);
+          // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+          // marker.setMap(null);    
+        </script>
+      </div>
+    </div>
   </div>
-  </form>
-  {% endif %}
-  </div>
-  <div class="mt-5">
-  <div id="map" style="width:300px;height:350px;"></div>
-
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c262112c4811d99bb369cd08f0c8ef80&libraries=clusterer&libraries=services"></script>
-  <script>
-  
-
-  var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-      mapOption = { 
-          center: new kakao.maps.LatLng(`{{ review.y }}`, `{{ review.x }}`), // 지도의 중심좌표
-          level: 3 // 지도의 확대 레벨
-      };
-  
-  var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-  // 마커가 표시될 위치입니다 
-  var markerPosition  = new kakao.maps.LatLng(`{{ review.y }}`, `{{ review.x }}`); 
-  
-  // 마커를 생성합니다
-  var marker = new kakao.maps.Marker({
-      position: markerPosition
-  });
-  
-  // 마커가 지도 위에 표시되도록 설정합니다
-  marker.setMap(map);
-  
-  // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-  // marker.setMap(null);    
-  
-  </script>
-</div>
-</div>
-
-
-<hr>
-<form class='like-form' data-review-pk='{{ review.pk }}'>
-  {% csrf_token %}
-  <span class='like-cnt'>{{review.like_art_users.count}}</span>
-  {% if request.user in review.like_art_users.all %}
-    <button class="btn btn-link text-danger">
-      <i class="bi bi-heart-fill heart-icon"></i>
-    </button>
-  {% else %}
-  <button class="btn btn-link text-danger">
-    <i class="bi bi-heart heart-icon"></i>
-  </button>
-  {% endif %}
-</form>
-
-{% if request.user.is_authenticated %}
-  <form action="{% url 'articles:comment_create' review.pk %}" method="POST">
-    {% csrf_token %}
-    {% bootstrap_form comment_form %}
-    <input class="bnt my-3"  type="submit" value="OK">
-  </form>
-{% endif %}
-<hr>
-{% if comments %}
-<p>
-  <b>{{ comments|length }}개의 댓글이 있습니다.</b>
-</p>
-<hr>
-{% endif %}
-<br>
-{% for comment in comments %}
-<article class='comment-block-{{ comment.pk }}'>
-
- 
-  <div class="p-3 mb-4" style="border-radius: 1rem; box-shadow: 2px 3px 7px">
-
-  <p class='comment-{{ comment.pk }}-content-container'>
-    {{ comment.user.username }}
-    |
-      <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
-  </p>
-  <div class="d-flex">
-    <a href="{% url 'articles:comment_update' review.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-review-pk='{{ review.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
-    <form action="{% url 'articles:comment_delete' review.pk comment.pk %}" method="POST" class="my-0">
-      {% csrf_token %}
-      <input type="submit" class="btn btn-outline-danger mx-2" value="삭제">
-    </form>
-  </div>
-</article>
-<hr>
-{% empty %}
-  <p>아직 아무도 못본거라고 믿자,,</p>
-{% endfor %}
-<a href="{% url 'articles:index' %}" class="text-decoration-none" >back</a>
 </div>
 {% endblock %}
 

@@ -97,3 +97,9 @@
   border: solid 1px;
   background-color: rgb(253, 253, 253);
 }
+
+.report {
+  max-width: 768px;
+  min-height: 700px;
+  background-color: rgb(253, 253, 253);
+}

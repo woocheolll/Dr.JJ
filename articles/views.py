@@ -4,8 +4,6 @@ from .models import Review, Comment
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
-
-
 # from django.db.models import Q
 
 # Create your views here.
@@ -16,9 +14,6 @@ def index(request):
     context = {"reviews": reviews}
     return render(request, "articles/index.html", context)
 
-
-
-@login_required
 
 def search(request):
     search = request.GET.get("search")
@@ -33,7 +28,6 @@ def search(request):
         return render(request, "articles/search.html", context)
     else:
         return redirect("articles:index")
-
 
 
 def create(request):
@@ -99,51 +93,11 @@ def delete(request, pk):
 
 
 @login_required
-def comment_create(request, pk):
-    review = Review.objects.get(pk=pk)
-    comment_form = CommentForm(request.POST)
-    if comment_form.is_valid():
-        comment = comment_form.save(commit=False)
-        comment.article = review
-        comment.user = request.user
-        comment.save()
-    return redirect("articles:detail", review.pk)
-
-
-@login_required
 def comment_delete(request, comment_pk, review_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment.delete()
     return redirect("articles:detail", review_pk)
 
-
-@login_required
-def comment_update(request, review_pk, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
-
-    data = {"comment_content": comment.content}
-
-    return JsonResponse(data)
-
-
-@login_required
-def comment_update_complete(request, review_pk, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
-    comment_form = CommentForm(request.POST, instance=comment)
-
-    if comment_form.is_valid():
-        comment = comment_form.save()
-
-        data = {
-            "comment_content": comment.content,
-        }
-        return JsonResponse(data)
-
-    data = {
-        "comment_content": comment.content,
-    }
-
-    return JsonResponse(data)
 
 
 @login_required
@@ -151,18 +105,49 @@ def like(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
     # if review.like_users.filter(id=request.user.id).exists():
-    if request.user in review.like_art_users.all():
+    if request.user in review.like_users.all():
         # 좋아요 삭제하고
-        review.like_art_users.remove(request.user)
+        review.like_users.remove(request.user)
 
     else:
         # 좋아요 추가하고
-        review.like_art_users.add(request.user)
+        review.like_users.add(request.user)
 
     # 상세 페이지로 redirect
 
     data = {
-        "like_cnt": review.like_art_users.count(),
+        "like_cnt": review.like_users.count(),
     }
 
     return JsonResponse(data)
+
+@login_required
+def comment_create(request,pk):
+
+    if request.method == "POST":
+        review = Review.objects.get(pk=pk)
+        comment_form = CommentForm(request.POST,request.FILES)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.user = request.user
+            comment.review = review
+            comment.save()
+        return redirect("articles:detail",pk )
+    else:
+        comment_form = CommentForm()
+    context = {"comment_form": comment_form}
+
+    return render(request, "articles/comment_create.html", context)
+
+
+def comment_detail(request, comment_pk,review_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    comment_form = CommentForm()
+
+    context = {
+        "comment": comment,
+        "comment_form": comment_form,
+    }
+    return render(request, "articles/comment_detail.html", context)
+
+

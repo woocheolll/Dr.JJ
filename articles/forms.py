@@ -11,15 +11,4 @@ class ReviewForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ("content",)
-        widgets = {
-            "content": forms.Textarea(
-                attrs={
-                    "placeholder": "",
-                    "style": "height: 50px; resize: none; width: 100%;",
-                }
-            ),
-        }
-        labels = {
-            "content": "댓글",
-        }
+        fields = ("content", "image")

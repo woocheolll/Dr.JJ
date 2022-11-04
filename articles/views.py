@@ -154,4 +154,23 @@ def comment_detail(request, comment_pk,review_pk):
     }
     return render(request, "articles/comment_detail.html", context)
 
+def comment_update(request,review_pk,comment_pk):
+    review = Review.objects.get(pk=review_pk)
+    comment = Comment.objects.get(pk=comment_pk)
+    if request.method == "POST":
+        comment_form = CommentForm(request.POST, instance=comment)
+        if comment_form.is_valid():
+            comment.user = request.user
+            comment.review = review
+            comment.save()
+            return redirect("articles:detail",review_pk)
+    else:
+        comment_form = CommentForm(instance=comment)
+    context ={
+        "comment_form": comment_form,
+        "review":review,
+        "comment":comment
+    }
+    return render(request, "articles/comment_create.html", context)
+
 

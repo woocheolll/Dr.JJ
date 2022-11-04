@@ -74,11 +74,7 @@
         <hr>
         <!-- 코멘트 -->
         {% if request.user.is_authenticated %}
-          <form action="{% url 'articles:comment_create' review.pk %}" method="POST">
-            {% csrf_token %}
-            {% bootstrap_form comment_form %}
-            <input class="btn btn-dark my-3"  type="submit" value="OK">
-          </form>
+        <a href="{% url 'articles:comment_create' review.pk %}" method="POST">댓글작성</a>
         {% endif %}
         <hr>
         {% if comments %}

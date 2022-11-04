@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "allauth.account",  # 가입한 계정을 관리하기 위한 것.
     "allauth.socialaccount",  # 소셜 계정을 관리하기 위한 것.
     "allauth.socialaccount.providers.naver",
-    "allauth.socialaccount.providers.google",
     "allauth.socialaccount.providers.kakao",
 ]
 

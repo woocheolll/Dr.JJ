@@ -4,6 +4,7 @@ from .models import Review, Comment
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
+
 # from django.db.models import Q
 
 # Create your views here.
@@ -14,6 +15,9 @@ def index(request):
     context = {"reviews": reviews}
     return render(request, "articles/index.html", context)
 
+
+
+@login_required
 
 def search(request):
     search = request.GET.get("search")

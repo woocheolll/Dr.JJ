@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% load static %}
+
 {% block content %}
-<div class="container">
-    <h1 class='text-center'> {{ user.username }}님 프로필 페이지 </h1>
-    <form action="{% url 'accounts:profile' user.pk %}" method='POST' enctype='multipart/form-data'>
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <input type="submit" value="프로필 업데이트" class="btn btn-outline-dark">
-    </form>
-</div>
+    <div class="container py-5">
+        <div class="form-box mx-auto my-5 position-relative">
+            <h2 class="text-center mt-5 mb-4">자기소개서</h2>
+            <div class="d-flex justify-content-end px-4">
+                <h4>이름 : {{ user.username }}</h4>
+            </div>
+            <form class="p-4 my-2" action="{% url 'accounts:profile' user.pk %}" method='POST' enctype='multipart/form-data'>
+                {% csrf_token %}
+                {% bootstrap_form form1 %}
+                {% bootstrap_form form2 %}
+                <div class="d-flex justify-content-end">
+                    <input class="btn btn-dark" type="submit" value="제출하기">
+                </div>
+            </form>
+            <img class="position-absolute top-0 start-0 my-3 mx-5" style="width:100px;" src="{%static 'images/introduce.jpg' %}" alt="">
+        </div>
+    </div>
 {% endblock %}
 

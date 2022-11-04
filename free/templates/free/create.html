@@ -3,13 +3,19 @@
 {% load static %}
 
 {% block content %}
-<div class='text-center'>
-    <h1>CREATE</h1>
+<div class="container py-3">
+    <div class="form-create mx-auto my-5 position-relative">
+        <img class="position-absolute top-0 end-0 mx-3" style="width:100px;" src="{%static 'images/banner.png' %}" alt="">
+        <h2 class="text-center mt-5 mb-4">{{ user }}의 자유연구일지</h2>
+            <form class="p-4 my-2" action="" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {% bootstrap_form review_form %}
+              <div class="d-flex justify-content-end">
+                <input class="btn btn-dark" type="submit" value="제출하기">
+              </div>
+            </form>
+        <a href="{% url 'free:index' %}" class="btn btn-dark text-decoration-none" >back</a>
+    </div>
+  </div>
 </div>
-<form action='' method='POST' enctype='multipart/form-data'>
-    {% csrf_token %}
-    {% bootstrap_form review_form %}
-    <input type="submit" value="작성">
-</form>
-<a href="{% url 'free:index' %}" class="text-decoration-none">back</a>
 {% endblock %}

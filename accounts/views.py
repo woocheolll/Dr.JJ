@@ -89,6 +89,7 @@ def detail(request, user_pk):
 
 
 @login_required
+# 새로운 프로필로 통합
 def update(request):
     if request.method == "POST":
         form = CustomUserChangeForm(request.POST, instance=request.user)
@@ -128,17 +129,41 @@ def follow(request, user_pk):
     return redirect("accounts:login")
 
 
+# 새로운 profile로 통합
+# def profile(request, pk):
+#     user = get_user_model().objects.get(pk=pk)
+#     if request.method == "POST":
+#         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("accounts:detail", pk)
+#     else:
+#         form = ProfileForm(instance=request.user.profile)
+#     context = {
+#         "user": user,
+#         "form": form,
+#     }
+#     return render(request, "accounts/profile.html", context)
+
+
+@login_required
 def profile(request, pk):
     user = get_user_model().objects.get(pk=pk)
     if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
-        if form.is_valid():
-            form.save()
+        form1 = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        form2 = CustomUserChangeForm(request.POST, instance=request.user)
+        if form1.is_valid() and form2.is_valid():
+            form1.save()
+            form2.save()
             return redirect("accounts:detail", pk)
+        else:
+            return render(request, "accounts/profile.html", context)
     else:
-        form = ProfileForm(instance=request.user.profile)
+        form1 = ProfileForm(instance=request.user.profile)
+        form2 = CustomUserChangeForm(instance=request.user)
     context = {
         "user": user,
-        "form": form,
+        "form1": form1,
+        "form2": form2,
     }
     return render(request, "accounts/profile.html", context)

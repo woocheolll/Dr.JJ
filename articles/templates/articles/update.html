@@ -1,20 +1,22 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load django_bootstrap5 %}
-
+{% load static %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
-
-<div class='text-center'>
-    <h1 class="mb-4">UPDATE페이지</h1>
+{% block content %}
+<div class="container py-3">
+  <div class="form-create mx-auto my-5 position-relative">
+      <img class="position-absolute top-0 end-0 mx-3" style="width:100px;" src="{%static 'images/banner.png' %}" alt="">
+      <h2 class="text-center mt-5 mb-4">Dr.JJ 맛집연구일지</h2>
+          <form class="p-4 my-2" action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form review_form %}
+            <div class="d-flex justify-content-end">
+              <input class="btn btn-dark" type="submit" value="제출하기">
+            </div>
+          </form>
+      <a href="{% url 'articles:index' %}" class="btn btn-dark text-decoration-none" >back</a>
+  </div>
 </div>
-<hr>
-<form action="" method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-
-  {% bootstrap_form review_form %}
-  {% bootstrap_button "저장" button_type="submit" button_class="btn-primary" %}
-</form>
-<a href="{% url 'articles:index' %}" class="text-decoration-none" ">back</a>
 {% endblock  %}

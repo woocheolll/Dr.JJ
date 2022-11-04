@@ -14,21 +14,15 @@ urlpatterns = [
     # 검색
     path("search/", views.search, name="search"),
     # articles 댓글
-    path("<int:pk>/comments/", views.comment_create, name="comment_create"),
+
     path(
         "<int:review_pk>/comments/<int:comment_pk>/delete/",
         views.comment_delete,
         name="comment_delete",
     ),
-    path(
-        "<int:review_pk>/comments/<int:comment_pk>/update/",
-        views.comment_update,
-        name="comment_update",
-    ),
-    path(
-        "<int:review_pk>/comments/<int:comment_pk>/update/complete/",
-        views.comment_update_complete,
-        name="comment_update_complete",
-    ),
     path("<int:review_pk>/like/", views.like, name="like"),
+
+    path("<int:pk>/comments/", views.comment_create, name="comment_create"),
+    path("<int:review_pk>/comments/<int:comment_pk>/comment_detail", views.comment_detail, name="comment_detail"),
+
 ]

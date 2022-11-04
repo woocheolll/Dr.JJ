@@ -23,3 +23,20 @@ class Profile(models.Model):
         options={"quality": 50},
     )
     status_message = models.CharField(max_length=100)
+
+    position_choices = [
+        ("먹보", None),
+        ("한식", "한식"),
+        ("분식", "분식"),
+        ("중식", "중식"),
+        ("일식", "일식"),
+        ("양식", "양식"),
+        ("아시안", "아시안"),
+        ("카페/디저트", "카페/디저트"),
+    ]
+
+    position = models.CharField(
+        max_length=10,
+        choices=position_choices,
+        default="선택",
+    )

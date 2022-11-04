@@ -147,7 +147,7 @@ def follow(request, user_pk):
 
 
 @login_required
-def profile(request, pk):
+def profile(request, pk, backend="django.contrib.auth.backends.ModelBackend"):
     user = get_user_model().objects.get(pk=pk)
     if request.method == "POST":
         form1 = ProfileForm(request.POST, request.FILES, instance=request.user.profile)

@@ -29,7 +29,7 @@ def signup(request):
     return render(request, "accounts/signup.html", context)
 
 
-def login(request, backend="django.contrib.auth.backends.ModelBackend"):
+def login(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -147,7 +147,7 @@ def follow(request, user_pk):
 
 
 @login_required
-def profile(request, pk, backend="django.contrib.auth.backends.ModelBackend"):
+def profile(request, pk):
     user = get_user_model().objects.get(pk=pk)
     if request.method == "POST":
         form1 = ProfileForm(request.POST, request.FILES, instance=request.user.profile)

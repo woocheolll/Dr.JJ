@@ -42,12 +42,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django.contrib.sites",  # 사이트 정보를 설정하기 위해 필요
-    "allauth",  # allauth 관련 앱 목록 추가
-    "allauth.account",  # 가입한 계정을 관리하기 위한 것.
-    "allauth.socialaccount",  # 소셜 계정을 관리하기 위한 것.
-    "allauth.socialaccount.providers.naver",
-    "allauth.socialaccount.providers.kakao",
+    #     "django.contrib.sites",  # 사이트 정보를 설정하기 위해 필요
+    #     "allauth",  # allauth 관련 앱 목록 추가
+    #     "allauth.account",  # 가입한 계정을 관리하기 위한 것.
+    #     "allauth.socialaccount",  # 소셜 계정을 관리하기 위한 것.
+    #     "allauth.socialaccount.providers.naver",
+    #     "allauth.socialaccount.providers.kakao",
 ]
 
 MIDDLEWARE = [
@@ -80,13 +80,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "DRJJ.wsgi.application"
 
-AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
-    "django.contrib.auth.backends.ModelBackend",
-    # `allauth` specific authentication methods, such as login by e-mail
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
-SITE_ID = 1  # 소셜로그인용
+# AUTHENTICATION_BACKENDS = [
+#     # Needed to login by username in Django admin, regardless of `allauth`
+#     "django.contrib.auth.backends.ModelBackend",
+#     # `allauth` specific authentication methods, such as login by e-mail
+#     "allauth.account.auth_backends.AuthenticationBackend",
+# ]
+# SITE_ID = 1  # 소셜로그인용
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 

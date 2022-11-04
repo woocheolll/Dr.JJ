@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5%}
+{% load static %}
+
+{% block content %}
+<div class='text-center'>
+    <h1>CREATE</h1>
+</div>
+
+    {% csrf_token %}
+    {% bootstrap_form comment_form %}
+    <input type="submit" value="작성">
+
+<a href="{% url 'articles:index' %}" class="text-decoration-none">back</a>
+{% endblock %}

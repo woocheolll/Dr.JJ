@@ -33,6 +33,14 @@ class Review(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
-    article = models.ForeignKey(Review, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = ProcessedImageField(
+        upload_to="images/",
+        blank=True,
+        processors=[ResizeToFill(1200, 960)],
+        format="JPEG",
+        options={"quality": 80},
+    )

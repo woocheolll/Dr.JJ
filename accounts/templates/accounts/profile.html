@@ -11,7 +11,8 @@
             </div>
             <form class="p-4 my-2" action="{% url 'accounts:profile' user.pk %}" method='POST' enctype='multipart/form-data'>
                 {% csrf_token %}
-                {% bootstrap_form form %}
+                {% bootstrap_form form1 %}
+                {% bootstrap_form form2 %}
                 <div class="d-flex justify-content-end">
                     <input class="btn btn-dark" type="submit" value="제출하기">
                 </div>

@@ -13,10 +13,9 @@
           <thead>
             <tr>
               <th scope="col">No</th>
-              <th scope="col">유저</th>
-              <th scope="col">성</th>
-              <th scope="col">이름</th>
+              <th scope="col">학생 이름</th>
               <th scope="col">이메일</th>
+              <th scope="col">입학 날짜</th>
             </tr>
           </thead>
           <tbody>
@@ -24,9 +23,8 @@
             <tr>
               <td>{{ user.pk }}</td>
               <td><a href="{% url 'accounts:detail' user.pk %}">{{ user.username }}</a></td>
-              <td>{{ user.last_name}}</td>
-              <td>{{ user.first_name }}</td>
               <td>{{user.email}}</td>
+              <td>{{ user.date_joined|date:'y-m-d' }}</td>
             </tr>
             {% endfor %}
           </tbody>

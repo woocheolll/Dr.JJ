@@ -15,9 +15,9 @@
           <div class="d-flex justify-content-end mt-5">
             <div class="m-2">
               {% load socialaccount %}
-              <a href=" {% provider_login_url 'google' %}">구글</a>
-              <a href=" {% provider_login_url 'naver' %}">네이버</a>
-              <a href=" {% provider_login_url 'kakao' %}">카카오</a>
+              <a href=" {% provider_login_url 'google' %}"><img src="{% static 'images/googleicon.png' %}"  style="width: 30px; height: 30px;"alt="구글로그인"></a>
+              <a href=" {% provider_login_url 'naver' %}"><img src="{% static 'images/navericon.png' %}"  style="width: 30px; height: 30px;"alt="네이버로그인"></a>
+              <a href=" {% provider_login_url 'kakao' %}"><img src="{% static 'images/kakaoicon.png' %}"  style="width: 30px; height: 30px;"alt="카카오로그인"></a>
             </div>
             <input class="btn btn-dark" type="submit" value="출입 확인">
           </div>
@@ -26,4 +26,5 @@
       </div>
     </div>
   </div>
+  
 {% endblock content %}

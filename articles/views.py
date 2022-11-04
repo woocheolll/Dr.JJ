@@ -5,7 +5,6 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
 
-
 # from django.db.models import Q
 
 # Create your views here.
@@ -17,9 +16,7 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
-
 @login_required
-
 def search(request):
     search = request.GET.get("search")
     if search:
@@ -33,7 +30,6 @@ def search(request):
         return render(request, "articles/search.html", context)
     else:
         return redirect("articles:index")
-
 
 
 def create(request):

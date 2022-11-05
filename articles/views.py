@@ -85,7 +85,7 @@ def update(request, pk):
         review_form = ReviewForm(instance=review)
     context = {"review_form": review_form}
 
-    return render(request, "articles/update.html", context)
+    return render(request, "articles/create.html", context)
 
 
 def delete(request, pk):

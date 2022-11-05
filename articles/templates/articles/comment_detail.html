@@ -9,9 +9,9 @@
     <h1 class="mb-4">DETAIL페이지</h1>
     <p>작성자 : {{ comment.user.username }} </p>
     <p>내용 : {{ comment.content }}</p>
-    {% if review.image %}
-    <img src="{{ review.image.url }}" alt="{{ review.image }}" width="400" height="300">
-  {% endif %}   
+    <div class="img-card my-2 p-1">
+      <img class="img-fit" src="{{ comment.image.url }}">
+    </div>  
     {% if request.user == review.user %}
     
     <div class="d-flex">

@@ -11,7 +11,7 @@
             <div id="map" class="mx-auto mb-2" style="width:500px;height:400px;"></div>
             <form class="p-4 my-2" name="mapform" action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <div class="mb-3"><label class="form-label" for="id_hotplace">음식점</label><input type="text" name="title" maxlength="100" class="form-control" placeholder="음식점" required="" id="id_hotplace"></div>
+                <div class="mb-3"><label class="form-label" for="id_title">음식점</label><input type="text" name="title" maxlength="100" class="form-control" placeholder="음식점" required="" id="id_title"></div>
                 <label for="id_addr" class="form-label">주소</label>
                 <div class="input-group mb-3">
                     <input name="addr" maxlength="80" type="text" class="form-control" placeholder="주소" id="id_addr" aria-label="Recipient's username" aria-describedby="button-addon2">

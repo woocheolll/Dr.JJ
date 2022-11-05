@@ -9,20 +9,15 @@
     <h1 class="mb-4">DETAIL페이지</h1>
     <p>작성자 : {{ comment.user.username }} </p>
     <p>내용 : {{ comment.content }}</p>
+    <div class="img-card my-2 p-1">
+      <img class="img-fit" src="{{ comment.image.url }}">
+    </div>
     {% if review.image %}
     <img src="{{ review.image.url }}" alt="{{ review.image }}" width="400" height="300">
   {% endif %}   
     {% if request.user == review.user %}
     
-    <div class="d-flex">
 
-      <a href="{}" class="btn btn-outline-dark">수정</a>
-    
-  <form action="{% url 'articles:comment_create' review.pk comment.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" class="btn btn-outline-danger mx-2" value="삭제">
-  </div>
-  </form>
   {% endif %}
   </div>
 

@@ -19,7 +19,6 @@ def signup(request):
             user = form.save()
             profile.user = user
             profile.save()
-            auth_login(request, user)
             return redirect("accounts:index")
     else:
         form = CustomUserCreationForm()

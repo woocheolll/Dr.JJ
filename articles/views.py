@@ -3,6 +3,7 @@ from .forms import ReviewForm, CommentForm
 from .models import Review, Comment
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 # from django.db.models import Q
@@ -16,7 +17,9 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
+
 @login_required
+
 def search(request):
     search = request.GET.get("search")
     if search:
@@ -34,17 +37,17 @@ def search(request):
 
 def create(request):
     if request.method == "POST":
-        form = ReviewForm(request.POST, request.FILES)
+        review_form = ReviewForm(request.POST, request.FILES)
         print(request.POST)
-        if form.is_valid():
-            temp = form.save(commit=False)
-            temp.user = request.user
-            temp.save()
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.save()
             return redirect("articles:index")
     else:
-        form = ReviewForm()
+        review_form = ReviewForm()
     context = {
-        "form": form,
+        "review_form": review_form,
     }
 
     return render(request, "articles/create.html", context)
@@ -73,19 +76,22 @@ def detail(request, review_pk):
         context,
     )
 
-
+@login_required
 def update(request, pk):
     review = Review.objects.get(pk=pk)
-    if request.method == "POST":
-        review_form = ReviewForm(request.POST, request.FILES, instance=review)
-        if review_form.is_valid():
-            review_form.save()
-            return redirect("articles:detail", review.pk)
-    else:
-        review_form = ReviewForm(instance=review)
-    context = {"review_form": review_form}
+    if request.user == review.user: 
+        if request.method == "POST":
+            review_form = ReviewForm(request.POST, request.FILES, instance=review)
+            if review_form.is_valid():
+                review_form.save()
+                return redirect("articles:detail", review.pk)
+        else:
+            review_form = ReviewForm(instance=review)
+    context = {
+        "review_form": review_form,
+        }
 
-    return render(request, "articles/update.html", context)
+    return render(request, "articles/create.html", context)
 
 
 def delete(request, pk):
@@ -99,6 +105,7 @@ def comment_delete(request, comment_pk, review_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment.delete()
     return redirect("articles:detail", review_pk)
+
 
 
 @login_required
@@ -122,19 +129,18 @@ def like(request, review_pk):
 
     return JsonResponse(data)
 
-
 @login_required
-def comment_create(request, pk):
+def comment_create(request,pk):
 
     if request.method == "POST":
         review = Review.objects.get(pk=pk)
-        comment_form = CommentForm(request.POST, request.FILES)
+        comment_form = CommentForm(request.POST,request.FILES)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
             comment.user = request.user
             comment.review = review
             comment.save()
-        return redirect("articles:detail", pk)
+        return redirect("articles:detail",pk )
     else:
         comment_form = CommentForm()
     context = {"comment_form": comment_form}
@@ -142,7 +148,7 @@ def comment_create(request, pk):
     return render(request, "articles/comment_create.html", context)
 
 
-def comment_detail(request, comment_pk, review_pk):
+def comment_detail(request, comment_pk,review_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_form = CommentForm()
 
@@ -170,5 +176,3 @@ def comment_update(request,review_pk,comment_pk):
         "comment":comment
     }
     return render(request, "articles/comment_create.html", context)
-
-

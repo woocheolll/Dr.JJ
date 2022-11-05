@@ -149,7 +149,7 @@ def search(request):
             | Q(content__icontains=search)
             # | Q(user__icontains=search) #FK라서 검색불가
         )
-        paginator = Paginator(search_list, 3)  # 페이지당 3개씩 보여주기
+        paginator = Paginator(search_list, 5)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
             "search_list": search_list,

@@ -122,3 +122,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.free-profile {
+  width: 45px;
+  height: 45px;
+  border: solid 1px gray;
+  border-radius: 20%;
+  object-fit: cover;
+}
+
+.free-comment-profile {
+  width: 30px;
+  height: 30px;
+  border: solid 1px gray;
+  border-radius: 20%;
+  object-fit: cover;
+}

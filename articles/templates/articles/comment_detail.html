@@ -3,30 +3,44 @@
 {% load static %}
 
 {% block content %}
-<div class='container'>
-  <div class="d-flex justify-content-between">
-<div class='m-3'>
-    <h1 class="mb-4">DETAIL페이지</h1>
-    <p>작성자 : {{ comment.user.username }} </p>
-    <p>내용 : {{ comment.content }}</p>
-    <div class="img-card my-2 p-1">
-      <img class="img-fit" src="{{ comment.image.url }}">
-    </div>  
-    {% if request.user == review.user %}
-    
-    <div class="d-flex">
 
-      <a href="{}" class="btn btn-outline-dark">수정</a>
-    
-  <form action="{% url 'articles:comment_create' review.pk comment.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" class="btn btn-outline-danger mx-2" value="삭제">
+<div class="container py-3">
+  <div class="form-create mx-auto my-5 position-relative">
+      <img class="position-absolute top-0 end-0 mx-3" style="width:100px;" src="{%static 'images/banner.png' %}" alt="">
+      <h2 class="text-center mt-5 mb-4">{{ comment.user.username }}의 수강후기</h2>
+      <div class="container my-5">
+        <div class="row my-3">
+          <div class="col-sm-12 col-md-6 d-flex justify-content-center align-items-center">
+            {% if comment.image %}
+            <img class="id-img p-2 border border-dark" src="{{ comment.image.url }}" alt="{{ comment.image }}">
+            {% endif %}
+          </div>
+          <div class="col-sm-12 col-md-6 d-flex justify-content-center">
+            <div class="d-flex align-items-center">
+              <dl class="row m-3 align-items-center">
+                <dt class="col-4 text-center">작성자</dt>
+                <dd class="col-8 my-1">{{ comment.user.username }}</dd>
+                <dt class="col-4 text-center">내용</dt>
+                <dd class="col-8 my-1">{{ comment.content }}</dd>
+                <dt class="col-4 text-center">평점</dt>
+                <dd class="col-8 my-1">A+</dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 수정/삭제 버튼 -->
+      {% if request.user == review.user %}
+      <div class="d-flex">
+        <a href="{}" class="btn btn-outline-dark">수정</a>
+        <form action="{% url 'articles:comment_create' review.pk comment.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-outline-danger mx-2" value="삭제">
+        </form>
+      </div>
+      {% endif %}
+      <a href="{% url 'articles:index' %}" class="btn btn-dark text-decoration-none" >back</a>
   </div>
-  </form>
-  {% endif %}
-  </div>
-
-
-  <a href="{% url 'articles:index' %}" class="text-decoration-none" >back</a>
 </div>
+
 {% endblock %}

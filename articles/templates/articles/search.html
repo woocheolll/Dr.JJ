@@ -1,32 +1,69 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
-  <div>
-    <h1 class='text-center my-5'>
-        "{{ search }}" 검색결과
-    </h1>
-
-    {% if reviews %}
-    <table class='table'>
-      <thead>
-        <tr>
-          <th scope='col'>제목</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for review in reviews %}
-          <tr>
-            <td>
-              <a href="{% url 'articles:detail' review.pk %}">{{ review.title }}</a>
-            </td>
-            <td>{{ review.content }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+<div class="container py-3">
+  <!-- 상단 바-->
+  <div class="d-flex align-items-center">
+    <a href="{% url 'articles:index' %}" class="display-2 me-3 link-btn text-dark text-decoration-none" >
+      <i class="bi bi-arrow-left-short"></i>
+    </a>
+  </div>
+  {% if reviews %}
+  <div class="free-banner p-3 d-flex justify-content-center">
+    <img class="free-banner-img me-5" src="{%static 'images/member.png' %}">
+    <div class="d-flex align-items-center">
+        <h3 class="m-0">"{{ search }}" 검색결과 입니다</h3>
+    </div>
+  </div>
+  <!-- 검색결과 -->
+  <div class="row">
+    {% for review in reviews %}
+    <div class="col-12 col-sm-6 col-md-4 my-3">
+      <div class="box back mx-auto">
+        <a href="{% url 'articles:detail' review.pk %}" class="text-decoration-none text-black">
+        <div class="box front position-relative py-3 px-2">
+          <h5>Dr.JJ 보고서</h5>
+          <div class="d-flex flex-column align-items-center">
+            <!-- 이미지 -->
+            {% if review.image %}
+            <div class="img-card my-2 p-1">
+              <img class="img-fit" src="{{ review.image.url }}">
+            </div>
+            {% else %}
+            <div class="img-card my-2 p-1">
+              <img class="img-fit" src="https://dummyimage.com/200x200/000/fff.png">
+            </div>
+            {% endif %}
+            <!-- 평점 평균 : 코드 추가 필요 -->
+            <div class="m-2 position-absolute bottom-0 end-0">
+              <span class="grade">A+</span>
+            </div>
+            <!-- 가게 정보 -->
+            <dl class="row p-2">
+              <dt class="col-4 text-center">이름:</dt>
+              <dd class="col-8 text-start">{{ review.title }}</dd>
+              <dt class="col-4 text-center">메뉴:</dt>
+              <dd class="col-8 text-start">{{ review.content }}</dd>
+              <dt class="col-4 text-center">주소:</dt>
+              <dd class="col-8 text-start">{{ review.addr }}</dd>
+            </dl>
+          </div>
+        </div>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
     {% else %}
-    <h1> 검색 결과가 없습니다. </h1>
+    <div class="free-banner p-3 d-flex justify-content-center">
+      <img class="free-banner-img me-5" src="{%static 'images/no.png' %}">
+      <div class="d-flex align-items-center">
+          <h3 class="m-0">검색결과가 없어요</h3>
+      </div>
+    </div>
     {% endif %}
   </div>
+</div>
+
 {% endblock %}

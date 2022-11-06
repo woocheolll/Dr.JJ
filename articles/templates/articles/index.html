@@ -53,14 +53,25 @@
 
     <div class="container">
       <!-- 배너 -->
-      <div class="banner d-flex p-3 w-100">
+      <div class="banner d-flex p-3 w-100 align-items-center justify-content-center">
         <img class="banner-img" src="{%static 'images/banner.png' %}">
-        <div class="w-100 my-auto mx-5">
+        <div class="ms-5">
           <h1>쩝쩝박사님 오늘의 메뉴는?</h1>
           <!-- 검색 폼 - 기능구현 X -->
-          <form action="{% url 'articles:search' %}" role='search' class='mb-0'>
-            <input type="search" id="mySearch" onkeyup="myFunction()" placeholder="메뉴 검색" title="Type in a category" class='ps-3 py-3' name='search'>
-            <input type="submit" class="btn  mx-2 ps-3 py-3" value="물어보기">
+          <form action="{% url 'articles:search' %}" role='search' class='mb-0 w-100'>
+            <div class="d-flex w-100">
+              <input type="search" id="mySearch" onkeyup="myFunction()" placeholder="메뉴 검색" title="Type in a category" class='ps-3 py-3 w-100' style="max-width: 500px;" name='search'>
+              <button class="btn btn-link" type="submit">
+                <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+                <lord-icon
+                    src="https://cdn.lordicon.com/msoeawqm.json"
+                    trigger="hover"
+                    colors="primary:#121331,secondary:#e83a30"
+                    stroke="70"
+                    style="width:60px;height:60px">
+                </lord-icon>
+              </button>
+            </div>
           </form>
         </div>
       </div>

@@ -152,7 +152,8 @@ def comment_detail(request, comment_pk, review_pk):
     }
     return render(request, "articles/comment_detail.html", context)
 
-def comment_update(request,review_pk,comment_pk):
+
+def comment_update(request, review_pk, comment_pk):
     review = Review.objects.get(pk=review_pk)
     comment = Comment.objects.get(pk=comment_pk)
     if request.method == "POST":
@@ -161,14 +162,23 @@ def comment_update(request,review_pk,comment_pk):
             comment.user = request.user
             comment.review = review
             comment.save()
-            return redirect("articles:detail",review_pk)
+            return redirect("articles:detail", review_pk)
     else:
         comment_form = CommentForm(instance=comment)
-    context ={
-        "comment_form": comment_form,
-        "review":review,
-        "comment":comment
-    }
+    context = {"comment_form": comment_form, "review": review, "comment": comment}
     return render(request, "articles/comment_create.html", context)
 
 
+# # 우리가 만드는 맛집정보
+# def admin_create(request):
+#     if request.method == "POST":
+#         form = ArticleForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("main:index")
+#     else:
+#         form = ArticleForm()
+#     context = {
+#         "form": form,
+#     }
+#     return render(request, "articles/admin_create.html", context)

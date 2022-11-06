@@ -19,6 +19,12 @@
       </div>
   </div>
   {% if question_list %}
+  <div class="free-banner p-3 d-flex justify-content-center">
+    <img class="free-banner-img me-5" src="{%static 'images/member.png' %}">
+    <div class="d-flex align-items-center">
+        <h3 class="m-0">"{{ search }}" 검색결과 입니다</h3>
+    </div>
+  </div>
   {% for review in question_list %}
     <div class="border-bottom p-3 d-flex flex-column">
       <h5 class="m-0">

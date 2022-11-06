@@ -152,11 +152,13 @@ def search(request):
         paginator = Paginator(search_list, 5)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
+            "search": search,
             "search_list": search_list,
             "question_list": page_obj,
         }
     else:
         context = {
+            "search": search,
             "search_list": all_data,
             "question_list": page_obj,
         }

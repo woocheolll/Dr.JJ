@@ -31,7 +31,16 @@
        
         <form class="d-flex m-2" role="search" action="{% url 'free:search' %}">
           <input class="form-control me-2" type="search"  method="GET" placeholder="EAT THIS!" name="search" aria-label="search">
-          <button class="btn btn-outline-dark"  type="submit">Go</button>
+          <button class="btn btn-link p-0 m-0"  type="submit">
+            <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+            <lord-icon
+                src="https://cdn.lordicon.com/msoeawqm.json"
+                trigger="hover"
+                colors="primary:#121331,secondary:#e83a30"
+                stroke="70"
+                style="width:38px;height:38px">
+            </lord-icon>
+          </button>
       </form>
       {% if request.user.is_authenticated %}
         <ul class="navbar-nav mb-2 mb-lg-0">

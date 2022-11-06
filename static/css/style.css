@@ -123,6 +123,12 @@
   text-overflow: ellipsis;
 }
 
+.free-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
 .free-profile {
   width: 45px;
   height: 45px;

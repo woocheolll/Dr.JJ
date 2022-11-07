@@ -37,13 +37,13 @@
                 <dt class="col-4 text-center">주소</dt>
                 <dd class="col-8">{{ review.addr }}</dd>
                 <dt class="col-4 text-center">전화번호</dt>
-                <dd class="col-8">000-0000</dd>
+                <dd class="col-8">{{review.contact}}</dd>
                 <dt class="col-4 text-center">웹사이트</dt>
-                <dd class="col-8">홈페이지/SNS</dd>
+                <dd class="col-8">{{review.homepage}}</dd>
                 <dt class="col-4 text-center">분류</dt>
                 <dd class="col-8">{{ review.content }}</dd>
                 <dt class="col-4 text-center">추천메뉴</dt>
-                <dd class="col-8">커피 000원</dd>
+                <dd class="col-8">{{review.menu}}</dd>
                 <dt class="col-4 text-center">생성일</dt>
                 <dd class="col-8">{{ review.created_at|date:'Y-m-d' }}</dd>
               </dl>

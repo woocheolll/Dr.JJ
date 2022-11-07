@@ -14,7 +14,9 @@ class Review(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    contact = models.CharField(max_length=14)
+    homepage = models.CharField(max_length=40, blank=True)
+    menu = models.TextField()
     image = ProcessedImageField(
         upload_to="images/",
         blank=True,

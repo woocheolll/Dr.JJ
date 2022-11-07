@@ -5,7 +5,18 @@ from .models import Review, Comment
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ["title", "addr", "content", "image", "x", "y"]
+        fields = [
+            "title",
+            "addr",
+            "content",
+            "contact",
+            "homepage",
+            "menu",
+            "image",
+            "x",
+            "y",
+        ]
+        widgets = {"menu": forms.Textarea(attrs={"rows": 3})}
 
 
 class CommentForm(forms.ModelForm):

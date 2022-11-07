@@ -29,8 +29,8 @@
    
       <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         {% if request.user.is_authenticated %}
-        <form class="d-flex m-2" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex m-2" action="{% url 'articles:search' %}" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"  name='search'>
           <button class="btn btn-outline-success" type="submit">Go</button>
         </form>
         <ul class="navbar-nav mb-2 mb-lg-0">

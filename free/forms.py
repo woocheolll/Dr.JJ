@@ -1,16 +1,16 @@
 from django import forms
-from .models import Review, Comment
+from .models import Freereview, Freecomment
 
 
 class ReviewForm(forms.ModelForm):
     class Meta:
-        model = Review
+        model = Freereview
         fields = ["title", "content", "image"]
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
-        model = Comment
+        model = Freecomment
         fields = [
             "content",
         ]

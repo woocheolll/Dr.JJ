@@ -16,10 +16,10 @@ class ReviewForm(forms.ModelForm):
             "x",
             "y",
         ]
-        widgets = {"menu": forms.Textarea(attrs={"rows": 3})}
+        widgets = {"menu": forms.Textarea(attrs={"rows": 1})}
 
 
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ("content",'grade', "image")
+        fields = ("content", "grade", "image")

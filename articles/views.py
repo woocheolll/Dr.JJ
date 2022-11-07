@@ -14,6 +14,9 @@ from django.core.paginator import Paginator
 
 # Create your views here.
 
+def prof(request):
+    pass
+    return render(request, "articles/prof.html")
 
 def index(request):
     reviews = Review.objects.order_by("-pk")

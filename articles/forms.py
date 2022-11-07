@@ -11,4 +11,4 @@ class ReviewForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ("content", "image")
+        fields = ("content",'grade', "image")

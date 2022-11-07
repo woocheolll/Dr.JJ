@@ -3,6 +3,7 @@ from .forms import ReviewForm, CommentForm
 from .models import Review, Comment
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
 
 
 # from django.db.models import Q
@@ -14,6 +15,7 @@ def index(request):
     reviews = Review.objects.order_by("-pk")
     context = {"reviews": reviews}
     return render(request, "articles/index.html", context)
+
 
 
 @login_required
@@ -51,6 +53,8 @@ def create(request):
 
 
 def detail(request, review_pk):
+    grades = Comment.objects.aggregate(Avg('grade'))
+    print(grades)
     review = Review.objects.get(pk=review_pk)
     if request.method == "POST":
         comment_form = CommentForm(request.POST)
@@ -66,6 +70,7 @@ def detail(request, review_pk):
         "comment_form": comment_form,
         "review": review,
         "comments": review.comment_set.all(),
+        "grades" : grades
     }
     return render(
         request,
@@ -133,6 +138,26 @@ def comment_create(request, pk):
             comment = comment_form.save(commit=False)
             comment.user = request.user
             comment.review = review
+            for _ in range(6):
+                if comment.grade == 0:
+                    comment.credit = 'F'
+                    break
+                elif comment.grade > 0 and comment.grade < 1.5:
+                    comment.credit = 'E+'
+                    break
+                elif comment.grade >= 1.5 and comment.grade < 2.5:
+                    comment.credit = 'D+'
+                    break
+                elif comment.grade >= 2.5 and comment.grade < 3.5:
+                    comment.credit = 'C+'
+                    break
+                elif comment.grade >= 3.5 and comment.grade < 4.5:
+                    comment.credit = 'B+'
+                    break
+                elif comment.grade >= 4.5:
+                    comment.credit = 'A+'
+                    break
+
             comment.save()
         return redirect("articles:detail", pk)
     else:

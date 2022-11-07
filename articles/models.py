@@ -36,6 +36,8 @@ class Comment(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    grade = models.FloatField(validators=[MinValueValidator(0.0),MaxValueValidator(5.0)])
+    credit = models.TextField()
     image = ProcessedImageField(
         upload_to="images/",
         blank=True,

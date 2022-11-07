@@ -101,6 +101,8 @@
                 <p class="my-1 fw-bold">{{ comment.user.username }}</p>
               </div>
               <p class="my-1">{{ comment.content }}</p>
+              <p>{{ comment.credit }}</p>
+              <p>{{ grades }}</p>
               <div class="d-flex justify-content-between w-100">
                 <p class="my-1 text-muted">{{ comment.updated_at | date:'m/d H:i' }}</p>
                 <div class="d-flex mx-2">
@@ -158,4 +160,3 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'js/articles/detail.js' %}"></script>
 {% endblock js %}
-

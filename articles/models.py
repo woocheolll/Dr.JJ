@@ -9,14 +9,11 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Review(models.Model):
     title = models.CharField(max_length=80)
     addr = models.CharField(max_length=80)
-    x = models.CharField(max_length=80, blank=False, null=False)
-    y = models.CharField(max_length=80, blank=False, null=False)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    contact = models.CharField(max_length=14)
-    homepage = models.CharField(max_length=40, blank=True)
-    menu = models.TextField()
+    x = models.CharField(max_length=80, blank=False, null=False)
+    y = models.CharField(max_length=80, blank=False, null=False)
     image = ProcessedImageField(
         upload_to="images/",
         blank=True,

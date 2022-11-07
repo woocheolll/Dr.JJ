@@ -30,22 +30,26 @@
           </div>
           <div class="d-flex justify-content-center align-items-center">
             <!-- 가게 정보 -->
-            <dl class="row m-3 align-items-center">
-              <dt class="col-6 text-center">상호명</dt>
-              <dd class="col-6 my-1">{{ review.title }}</dd>
-              <dt class="col-6 text-center">주소</dt>
-              <dd class="col-6 my-1">{{ review.addr }}</dd>
-              <dt class="col-6 text-center">전화번호</dt>
-              <dd class="col-6 my-1">000-0000</dd>
-              <dt class="col-6 text-center">웹사이트</dt>
-              <dd class="col-6 my-1">홈페이지/SNS</dd>
-              <dt class="col-6 text-center">분류</dt>
-              <dd class="col-6 my-1">{{ review.content }}</dd>
-              <dt class="col-6 text-center">추천메뉴</dt>
-              <dd class="col-6 my-1">커피 000원</dd>
-              <dt class="col-6 text-center">생성일</dt>
-              <dd class="col-6 my-1">{{ review.created_at|date:'Y-m-d' }}</dd>
-            </dl>
+
+            <div class="d-flex align-items-center">
+              <dl class="row m-3 align-items-center">
+                <dt class="col-4 text-center">상호명</dt>
+                <dd class="col-8">{{ review.title }}</dd>
+                <dt class="col-4 text-center">주소</dt>
+                <dd class="col-8">{{ review.addr }}</dd>
+                <dt class="col-4 text-center">전화번호</dt>
+                <dd class="col-8">{{review.contact}}</dd>
+                <dt class="col-4 text-center">웹사이트</dt>
+                <dd class="col-8">{{review.homepage}}</dd> 
+                <dt class="col-4 text-center">분류</dt>
+                <dd class="col-8">{{ review.position }}</dd>
+                <dt class="col-4 text-center">추천메뉴</dt>
+                <dd class="col-8">{{review.menu}}</dd> 
+                <dt class="col-4 text-center">생성일</dt>
+                <dd class="col-8">{{ review.created_at|date:'Y-m-d' }}</dd>
+              </dl>
+            </div>
+
           </div>
         </div>
         <!-- 수정 / 삭제 -->

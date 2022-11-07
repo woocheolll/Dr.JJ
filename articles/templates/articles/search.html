@@ -10,7 +10,7 @@
       <i class="bi bi-arrow-left-short"></i>
     </a>
   </div>
-  {% if reviews %}
+  {% if question_list %}
   <div class="free-banner p-3 d-flex justify-content-center">
     <img class="free-banner-img me-5" src="{%static 'images/member.png' %}">
     <div class="d-flex align-items-center">
@@ -19,7 +19,7 @@
   </div>
   <!-- 검색결과 -->
   <div class="row">
-    {% for review in reviews %}
+    {% for review in question_list %}
     <div class="col-12 col-sm-6 col-md-4 my-3">
       <div class="box back mx-auto">
         <a href="{% url 'articles:detail' review.pk %}" class="text-decoration-none text-black">
@@ -45,7 +45,7 @@
               <dt class="col-4 text-center">이름:</dt>
               <dd class="col-8 text-start">{{ review.title }}</dd>
               <dt class="col-4 text-center">메뉴:</dt>
-              <dd class="col-8 text-start">{{ review.content }}</dd>
+              <dd class="col-8 text-start">{{ review.menu }}</dd>
               <dt class="col-4 text-center">주소:</dt>
               <dd class="col-8 text-start">{{ review.addr }}</dd>
             </dl>
@@ -55,6 +55,43 @@
       </div>
     </div>
     {% endfor %}
+    <br>
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if question_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link text-danger" href="?page={{ question_list.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in question_list.paginator.page_range %}
+        {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
+        {% if page_number == question_list.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link text-bg-danger border-danger" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link text-danger" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if question_list.has_next %}
+        <li class="page-item">
+            <a class="page-link text-danger" href="?page={{ question_list.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
     {% else %}
     <div class="free-banner p-3 d-flex justify-content-center">
       <img class="free-banner-img me-5" src="{%static 'images/no.png' %}">

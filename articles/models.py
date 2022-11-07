@@ -62,3 +62,5 @@ class Comment(models.Model):
         format="JPEG",
         options={"quality": 80},
     )
+
+    

@@ -1,8 +1,11 @@
 asgiref==3.5.2
 asttokens==2.1.0
 backcall==0.2.0
+<<<<<<< HEAD
 boto3==1.26.3
 botocore==1.29.3
+=======
+>>>>>>> 6d50053ce1a98981e11555175e7c7386634c6fd1
 colorama==0.4.6
 decorator==5.1.1
 dj-database-url==1.0.0
@@ -11,7 +14,10 @@ django-appconf==1.0.5
 django-bootstrap5==22.1
 django-extensions==3.2.1
 django-imagekit==4.1.0
+<<<<<<< HEAD
 django-storages==1.13.1
+=======
+>>>>>>> 6d50053ce1a98981e11555175e7c7386634c6fd1
 executing==1.2.0
 gunicorn==20.1.0
 ipython==8.6.0
@@ -26,14 +32,24 @@ prompt-toolkit==3.0.32
 psycopg2-binary==2.9.5
 pure-eval==0.2.2
 Pygments==2.13.0
+<<<<<<< HEAD
 python-dateutil==2.8.2
 python-dotenv==0.21.0
 pytz==2022.6
 s3transfer==0.6.0
+=======
+python-dotenv==0.21.0
+pytz==2022.6
+>>>>>>> 6d50053ce1a98981e11555175e7c7386634c6fd1
 six==1.16.0
 sqlparse==0.4.3
 stack-data==0.6.0
 traitlets==5.5.0
+<<<<<<< HEAD
 urllib3==1.26.12
 wcwidth==0.2.5
 whitenoise==6.2.0
+=======
+wcwidth==0.2.5
+whitenoise==6.2.0
+>>>>>>> 6d50053ce1a98981e11555175e7c7386634c6fd1

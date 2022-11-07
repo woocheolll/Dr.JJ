@@ -28,6 +28,12 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'articles:prof' %}">교수 소개</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'accounts:index' %}">재학생</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'articles:thx' %}">재능기부</a>
+            </li>
           </ul>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,11 +89,13 @@
       </div>
 
       <!-- 작성 버튼(관리자만?) -->
+      {% comment %} {% if request.user ==  %} {% endcomment %}
       <div>
         <a href="{% url 'articles:create' %}" class="text-decoration-none text-dark">
           <h4>CREATE</h4>
         </a>
       </div>
+      {% comment %} {% endif %} {% endcomment %}
       <div class="row">
         <!-- 리뷰가 있으면 -->
         {% if question_list %}
@@ -111,7 +119,24 @@
                   <!-- 평점 평균 : 코드 추가 필요 -->
 
                   <div class="m-2 position-absolute bottom-0 end-0">
-                    <span class="grade"><p>{{ grades }}</p></span>
+
+                  {%for i in grades %}
+                    {% if review.pk == i.pk %}
+                      {% if i.average_grade < 1.5 %}
+                        <h1 class="grade"> F </h1>
+                      {% elif i.average_grade < 2.5 %}
+                        <h1 class="grade"> D+ </h1>
+                      {% elif i.average_grade < 3.5 %}
+                        <h1 class="grade"> C+ </h1>
+                      {% elif i.average_grade < 4.5 %}
+                        <h1 class="grade"> B+ </h1>
+                      {% elif i.average_grade > 4.5%}
+                        <h1 class="grade"> A+ </h1>
+                      {% else %}
+                        <h1 class="grade"> ? </h1>
+                      {% endif%}
+                    {% endif %}
+                  {% endfor %}
 
 
                   </div>
@@ -123,6 +148,7 @@
                     <dd class="col-8 text-start">{{ review.menu }}</dd>
                     <dt class="col-4 text-center">주소:</dt>
                     <dd class="col-8 text-start">{{ review.addr }}</dd>
+
                   </dl>
                 </div>
               </div>

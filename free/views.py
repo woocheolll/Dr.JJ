@@ -34,6 +34,7 @@ def create(request):
     return render(request, "free/create.html", context)
 
 
+@login_required
 def detail(request, free_pk):
     review = Freereview.objects.get(pk=free_pk)
     comment_form = CommentForm()
@@ -46,6 +47,7 @@ def detail(request, free_pk):
     return render(request, "free/detail.html", context)
 
 
+@login_required
 def update(request, free_pk):
     review = Freereview.objects.get(pk=free_pk)
     if request.method == "POST":
@@ -60,6 +62,7 @@ def update(request, free_pk):
     return render(request, "free/update.html", context)
 
 
+@login_required
 def delete(request, free_pk):
     review = Freereview.objects.get(pk=free_pk)
     review.delete()
@@ -137,6 +140,7 @@ def like(request, free_pk):
     return JsonResponse(data)
 
 
+@login_required
 def search(request):
     all_data = Freereview.objects.order_by("-pk")
     search = request.GET.get("search", "")

@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
+* {
+  font-family: 'Jua', sans-serif;
+}
+
+.nav {
+  --bs-nav-link-padding-x: 1rem;
+  --bs-nav-link-padding-y: 0.5rem;
+  --bs-nav-link-font-weight: ;
+  --bs-nav-link-color: #dc3545;
+  --bs-nav-link-hover-color: #b92c39;
+  --bs-nav-link-disabled-color: #6c757d;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.box {
+  width: 270px;
+  border: solid 1px;
+  background-color: rgb(253, 253, 253);
+  text-align: center;
+}
+
+.front {
+  position: relative;
+  top: -15px;
+  left: 10px;
+  transform: rotate(2deg);
+}
+
+.back {
+  margin: 3rem;
+  box-shadow: 10px 10px 10px 10px gray;
+}
+
+.clip-board {
+  width: 676px;
+  min-height: 800px;
+  background-color: black;
+}
+
+.member {
+  position: relative;
+  top: 50px;
+  left: 50px;
+  width: 576px;
+  min-height: 700px;
+  border: solid 1px;
+  background-color: rgb(253, 253, 253);
+}
+
+.img-card {
+  width: 120px;
+  height: 120px;
+  border: solid 1px;
+}
+
+.img-fit {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+}
+
+.img-card2 {
+  width: 200px;
+  height: 200px;
+  border: solid 1px;
+}
+
+.img-fit2 {
+  width: 190px;
+  height: 190px;
+  border: solid 1px;
+}
+
+.grade {
+  font-family: 'Lobster', cursive;
+  color: red;
+}
+
+.banner {
+  height: 300px;
+}
+
+.banner-img {
+  height: 200px;
+  object-fit: contain;
+}
+
+.id-card {
+  max-width: 720px;
+  min-width: 500px;
+  min-height: 350px;
+}
+
+.id-img {
+  border: solid 3px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.id-img2 {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.form-box {
+  max-width: 576px;
+  border: solid 1px;
+  background-color: rgb(253, 253, 253);
+}
+
+.form-card {
+  max-width: 576px;
+  min-height: 350px;
+  border: solid 1px;
+}
+
+.form-create {
+  max-width: 720px;
+  border: solid 1px;
+  background-color: rgb(253, 253, 253);
+}
+
+.report {
+  max-width: 768px;
+  min-height: 700px;
+  background-color: rgb(253, 253, 253);
+}
+
+.free-banner {
+  height: 200px;
+}
+
+.free-banner-img {
+  object-fit: cover;
+}
+
+.link-btn {
+  line-height: 2;
+}
+
+.free-content {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 250px;
+  text-overflow: ellipsis;
+}
+
+.free-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.free-profile {
+  width: 45px;
+  height: 45px;
+  border: solid 1px gray;
+  border-radius: 20%;
+  object-fit: cover;
+}
+
+.free-comment-profile {
+  width: 30px;
+  height: 30px;
+  border: solid 1px gray;
+  border-radius: 20%;
+  object-fit: cover;
+}

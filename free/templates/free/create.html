@@ -11,10 +11,10 @@
             {% csrf_token %}
             {% bootstrap_form review_form %}
             <div class="d-flex justify-content-end">
-              <input class="btn btn-dark" type="submit" value="제출하기">
+              <input class="btn btn-dark mx-2" type="submit" value="제출하기">
+              <a href="{% url 'free:index' %}" class="btn btn-outline-dark text-decoration-none" >back</a>
             </div>
           </form>
-        <a href="{% url 'free:index' %}" class="btn btn-dark text-decoration-none" >back</a>
     </div>
   </div>
 </div>

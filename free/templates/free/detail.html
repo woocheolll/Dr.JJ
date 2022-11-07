@@ -30,14 +30,16 @@
         <p class="text-muted m-0">{{ review.updated_at | date:'m/d H:i' }}</p>
       </div>
     </div>
-    <h5 class="my-2">{{ review.title }}</h5>
-    <div class="d-flex justify-content-between">
-      <p class="my-2">{{ review.content }}</p>
+    <div class="d-flex">
       {% if review.image %}
-      <img class="id-img rounded border mx-2" src="{{ review.image.url }}" alt="{{ review.image }}">
+      <img class="id-img rounded border me-4" src="{{ review.image.url }}" alt="{{ review.image }}">
       {% endif %}
+      <div>
+        <h5 class="my-2">{{ review.title }}</h5>
+        <p class="my-2">{{ review.content }}</p>
+      </div>
     </div>
-    <div class="d-flex my-2 justify-content-between">
+    <div class="d-flex my-2 justify-content-between align-items-center">
       <!-- 좋아요/댓글 수 -->
       <p class="m-0">
         <span class='text-danger me-2'>

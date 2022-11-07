@@ -28,16 +28,16 @@
           <div class="d-flex flex-column align-items-center">
             <!-- 이미지 -->
             {% if review.image %}
-            <div class="img-card my-2 p-1">
-              <img class="img-fit" src="{{ review.image.url }}">
+            <div class="img-card2 my-2 p-1">
+              <img class="img-fit2" src="{{ review.image.url }}">
             </div>
             {% else %}
-            <div class="img-card my-2 p-1">
-              <img class="img-fit" src="https://dummyimage.com/200x200/000/fff.png">
+            <div class="img-card2 my-2 p-1">
+              <img class="img-fit2" src="https://dummyimage.com/200x200/000/fff.png">
             </div>
             {% endif %}
             <!-- 평점 평균 : 코드 추가 필요 -->
-            <div class="m-2 position-absolute bottom-0 end-0">
+            <div class="mt-3 position-absolute bottom-0 end-0">
               <span class="grade">A+</span>
             </div>
             <!-- 가게 정보 -->

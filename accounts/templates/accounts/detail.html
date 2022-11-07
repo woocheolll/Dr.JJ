@@ -6,7 +6,7 @@
   <div class="container">
 
     <!-- 학생증 -->
-    <div class="card id-card mx-auto my-3 border-dark">
+    <div class="card id-card mx-auto my-3 border border-dark border-3">
       <div class="card-header border-dark text-center text-bg-dark">
         JJ UNIVERSITY ID CARD
       </div>
@@ -90,7 +90,7 @@
     </ul>
     <div class="tab-content" id="myTabContent">
       <!-- 아티클 -->
-      <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+      <div class="tab-pane fade show active mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
         <div class="row my-3">
           <div class="col-12 col-md-6 d-flex flex-column">
             <h4 class="text-center">좋아요 {{ user.like_review.count }}</h4>
@@ -129,7 +129,7 @@
         </div>
       </div>
       <!-- 자유게시판 -->
-      <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+      <div class="tab-pane fade mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
         <div class="row my-3">
           <div class="col-12 col-md-6 d-flex flex-column">
             <h4 class="text-center">게시글 {{ user.freereview_set.count }}</h4>

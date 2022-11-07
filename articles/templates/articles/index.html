@@ -28,6 +28,12 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'articles:prof' %}">교수 소개</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'accounts:index' %}">재학생</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'articles:thx' %}">재능기부</a>
+            </li>
           </ul>
         </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,11 +89,13 @@
       </div>
 
       <!-- 작성 버튼(관리자만?) -->
+      {% comment %} {% if request.user ==  %} {% endcomment %}
       <div>
         <a href="{% url 'articles:create' %}" class="text-decoration-none text-dark">
           <h4>CREATE</h4>
         </a>
       </div>
+      {% comment %} {% endif %} {% endcomment %}
       <div class="row">
         <!-- 리뷰가 있으면 -->
         {% if question_list %}

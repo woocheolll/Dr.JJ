@@ -20,6 +20,11 @@ def prof(request):
     return render(request, "articles/prof.html")
 
 
+def thx(request):
+    pass
+    return render(request, "articles/thx.html")
+
+
 def index(request):
     reviews = Review.objects.order_by("-pk")
     all_article = Review.objects.all()
@@ -52,6 +57,7 @@ def index(request):
 #         return redirect("articles:index")
 
 
+@login_required
 def search(request):
     all_data = Review.objects.order_by("-pk")
     search = request.GET.get("search", "")
@@ -82,6 +88,7 @@ def search(request):
     return render(request, "articles/search.html", context)
 
 
+@login_required
 def create(request):
     if request.method == "POST":
         form = ReviewForm(request.POST, request.FILES)
@@ -102,6 +109,7 @@ def create(request):
     return render(request, "articles/create.html", context)
 
 
+@login_required
 def detail(request, review_pk):
     grades = Review.objects.all().annotate(average_grade=Avg("comment_user__grade"))
     review = Review.objects.get(pk=review_pk)
@@ -128,6 +136,7 @@ def detail(request, review_pk):
     )
 
 
+@login_required
 def update(request, pk):
     review = Review.objects.get(pk=pk)
     if request.method == "POST":
@@ -142,6 +151,7 @@ def update(request, pk):
     return render(request, "articles/create.html", context)
 
 
+@login_required
 def delete(request, pk):
     review = Review.objects.get(pk=pk)
     review.delete()
@@ -223,6 +233,7 @@ def comment_detail(request, comment_pk, review_pk):
     return render(request, "articles/comment_detail.html", context)
 
 
+@login_required
 def comment_update(request, review_pk, comment_pk):
     review = Review.objects.get(pk=review_pk)
     comment = Comment.objects.get(pk=comment_pk)

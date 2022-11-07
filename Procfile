@@ -1,0 +1,1 @@
+web: gunicorn DRJJ.wsgi --log-file -

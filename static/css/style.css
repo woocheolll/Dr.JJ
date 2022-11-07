@@ -7,7 +7,6 @@
 
 .box {
   width: 270px;
-  height: 350px;
   border: solid 1px;
   background-color: rgb(253, 253, 253);
   text-align: center;
@@ -52,6 +51,18 @@
   object-fit: cover;
 }
 
+.img-card2 {
+  width: 200px;
+  height: 200px;
+  border: solid 1px;
+}
+
+.img-fit2 {
+  width: 190px;
+  height: 190px;
+  border: solid 1px;
+}
+
 .grade {
   font-family: 'Lobster', cursive;
   color: red;
@@ -77,6 +88,12 @@
   border: solid 3px;
   width: 200px;
   height: 200px;
+  object-fit: cover;
+}
+
+.id-img2 {
+  width: 300px;
+  height: 300px;
   object-fit: cover;
 }
 
@@ -117,9 +134,9 @@
 }
 
 .free-content {
-  display: inline-block;
   white-space: nowrap;
   overflow: hidden;
+  width: 250px;
   text-overflow: ellipsis;
 }
 

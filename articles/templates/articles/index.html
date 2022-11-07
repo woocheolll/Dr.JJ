@@ -57,7 +57,7 @@
         <img class="banner-img" src="{%static 'images/banner.png' %}">
         <div class="ms-5">
           <h1>쩝쩝박사님 오늘의 메뉴는?</h1>
-          <!-- 검색 폼 - 기능구현 X -->
+          <!-- 검색 폼 -->
           <form action="{% url 'articles:search' %}" role='search' class='mb-0 w-100'>
             <div class="d-flex w-100">
               <input type="search" id="mySearch" onkeyup="myFunction()" placeholder="메뉴 검색" title="Type in a category" class='ps-3 py-3 w-100' style="max-width: 500px;" name='search'>
@@ -94,24 +94,27 @@
                 <div class="d-flex flex-column align-items-center">
                 <!-- 이미지 -->
                 {% if review.image %}
-                  <div class="img-card my-2 p-1">
-                    <img class="img-fit" src="{{ review.image.url }}">
+                  <div class="img-card2 my-2 p-1">
+                    <img class="img-fit2" src="{{ review.image.url }}">
                   </div>
                 {% else %}
-                  <div class="img-card my-2 p-1">
-                    <img class="img-fit" src="https://dummyimage.com/200x200/000/fff.png">
+                  <div class="img-card2 my-2 p-1">
+                    <img class="img-fit2" src="https://dummyimage.com/200x200/000/fff.png">
                   </div>
                 {% endif %}
                   <!-- 평점 평균 : 코드 추가 필요 -->
+
                   <div class="m-2 position-absolute bottom-0 end-0">
-                    <span class="grade">A+</span>
+                    <span class="grade"><p>{{ grades }}</p></span>
+
+
                   </div>
                   <!-- 가게 정보 -->
                   <dl class="row p-2">
                     <dt class="col-4 text-center">이름:</dt>
                     <dd class="col-8 text-start">{{ review.title }}</dd>
                     <dt class="col-4 text-center">메뉴:</dt>
-                    <dd class="col-8 text-start">{{ review.content }}</dd>
+                    <dd class="col-8 text-start">{{ review.menu }}</dd>
                     <dt class="col-4 text-center">주소:</dt>
                     <dd class="col-8 text-start">{{ review.addr }}</dd>
                   </dl>
@@ -128,6 +131,43 @@
         </h1>
         {% endif %}
     </div>
+    <br>
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if review.has_previous %}
+        <li class="page-item">
+            <a class="page-link text-danger" href="?page={{ review.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in review.paginator.page_range %}
+        {% if page_number >= review.number|add:-5 and page_number <= review.number|add:5 %}
+        {% if page_number == review.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link text-bg-danger border-danger" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link text-danger" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if review.has_next %}
+        <li class="page-item">
+            <a class="page-link text-danger" href="?page={{ review.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
   </body>
 
 </html>

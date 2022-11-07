@@ -22,7 +22,10 @@ class Profile(models.Model):
         format="JPEG",
         options={"quality": 50},
     )
-    status_message = models.CharField(max_length=100)
+    status_message = models.CharField(
+        max_length=100,
+        blank=True,
+    )
 
     position_choices = [
         ("먹보", None),

@@ -3,6 +3,11 @@ from .forms import ReviewForm, CommentForm
 from .models import Review, Comment
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
+
+from django.db.models import Q
+from django.core.paginator import Paginator
+
 
 
 # from django.db.models import Q
@@ -16,27 +21,64 @@ def index(request):
     return render(request, "articles/index.html", context)
 
 
+
+
 @login_required
+
+# @login_required
+# def search(request):
+#     search = request.GET.get("search")
+#     if search:
+#         reviews = Review.objects.filter(title__contains=search) | Review.objects.filter(
+#             content__contains=search
+#         )
+#         context = {
+#             "search": search,
+#             "reviews": reviews,
+#         }
+#         return render(request, "articles/search.html", context)
+#     else:
+#         return redirect("articles:index")
+
+
+
 def search(request):
-    search = request.GET.get("search")
+    all_data = Review.objects.order_by("-pk")
+    search = request.GET.get("search", "")
+    page = request.GET.get("page", "1")  # 페이지
+    paginator = Paginator(all_data, 5)
+    page_obj = paginator.get_page(page)
     if search:
-        reviews = Review.objects.filter(title__contains=search) | Review.objects.filter(
-            content__contains=search
+        search_list = all_data.filter(
+            Q(title__icontains=search)
+            | Q(menu__icontains=search)
+            | Q(addr__icontains=search)
+            # | Q(user__icontains=search) #FK라서 검색불가
         )
+        paginator = Paginator(search_list, 5)  # 페이지당 3개씩 보여주기
+        page_obj = paginator.get_page(page)
         context = {
             "search": search,
-            "reviews": reviews,
+            "search_list": search_list,
+            "question_list": page_obj,
         }
-        return render(request, "articles/search.html", context)
     else:
-        return redirect("articles:index")
+        context = {
+            "search": search,
+            "search_list": all_data,
+            "question_list": page_obj,
+        }
+
+    return render(request, "articles/search.html", context)
 
 
 def create(request):
     if request.method == "POST":
         form = ReviewForm(request.POST, request.FILES)
         print(request.POST)
+        print(form.is_valid)
         if form.is_valid():
+
             temp = form.save(commit=False)
             temp.user = request.user
             temp.save()
@@ -51,6 +93,8 @@ def create(request):
 
 
 def detail(request, review_pk):
+    grades = Comment.objects.aggregate(Avg('grade'))
+    print(grades)
     review = Review.objects.get(pk=review_pk)
     if request.method == "POST":
         comment_form = CommentForm(request.POST)
@@ -66,6 +110,7 @@ def detail(request, review_pk):
         "comment_form": comment_form,
         "review": review,
         "comments": review.comment_set.all(),
+        "grades" : grades
     }
     return render(
         request,
@@ -133,6 +178,26 @@ def comment_create(request, pk):
             comment = comment_form.save(commit=False)
             comment.user = request.user
             comment.review = review
+            for _ in range(6):
+                if comment.grade == 0:
+                    comment.credit = 'F'
+                    break
+                elif comment.grade > 0 and comment.grade < 1.5:
+                    comment.credit = 'E+'
+                    break
+                elif comment.grade >= 1.5 and comment.grade < 2.5:
+                    comment.credit = 'D+'
+                    break
+                elif comment.grade >= 2.5 and comment.grade < 3.5:
+                    comment.credit = 'C+'
+                    break
+                elif comment.grade >= 3.5 and comment.grade < 4.5:
+                    comment.credit = 'B+'
+                    break
+                elif comment.grade >= 4.5:
+                    comment.credit = 'A+'
+                    break
+
             comment.save()
         return redirect("articles:detail", pk)
     else:

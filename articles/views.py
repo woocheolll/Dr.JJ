@@ -28,6 +28,7 @@ def index(request):
     page_obj = paginator.get_page(page)
     context = {
         "reviews": reviews,
+        "all_article": all_article,
         "question_list": page_obj,
         "grades": grades,
     }

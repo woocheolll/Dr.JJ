@@ -22,7 +22,7 @@ def prof(request):
 
 def index(request):
     reviews = Review.objects.order_by("-pk")
-    all_article = Review.objects.all()
+    grades = Review.objects.all().annotate(average_grade=Avg("comment_user__grade"))
     page = request.GET.get("page", "1")  # 페이지
     paginator = Paginator(reviews, 6)
     page_obj = paginator.get_page(page)
@@ -30,6 +30,7 @@ def index(request):
         "reviews": reviews,
         "all_article": all_article,
         "question_list": page_obj,
+        "grades": grades,
     }
     return render(request, "articles/index.html", context)
 
@@ -101,8 +102,7 @@ def create(request):
 
 
 def detail(request, review_pk):
-    grades = Comment.objects.aggregate(Avg("grade"))
-    print(grades)
+    grades = Review.objects.all().annotate(average_grade=Avg("comment_user__grade"))
     review = Review.objects.get(pk=review_pk)
     if request.method == "POST":
         comment_form = CommentForm(request.POST)
@@ -117,7 +117,7 @@ def detail(request, review_pk):
     context = {
         "comment_form": comment_form,
         "review": review,
-        "comments": review.comment_set.all(),
+        "comments": review.comment_user.all(),
         "grades": grades,
     }
     return render(
@@ -178,7 +178,6 @@ def like(request, review_pk):
 
 @login_required
 def comment_create(request, pk):
-
     if request.method == "POST":
         review = Review.objects.get(pk=pk)
         comment_form = CommentForm(request.POST, request.FILES)
@@ -187,11 +186,8 @@ def comment_create(request, pk):
             comment.user = request.user
             comment.review = review
             for _ in range(6):
-                if comment.grade == 0:
+                if comment.grade < 1.5:
                     comment.credit = "F"
-                    break
-                elif comment.grade > 0 and comment.grade < 1.5:
-                    comment.credit = "E+"
                     break
                 elif comment.grade >= 1.5 and comment.grade < 2.5:
                     comment.credit = "D+"

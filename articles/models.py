@@ -50,10 +50,14 @@ class Review(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    review = models.ForeignKey(
+        Review, on_delete=models.CASCADE, related_name="comment_user"
+    )
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    grade = models.FloatField(validators=[MinValueValidator(0.0),MaxValueValidator(5.0)])
+    grade = models.FloatField(
+        validators=[MinValueValidator(0.0), MaxValueValidator(5.0)]
+    )
     credit = models.TextField()
     image = ProcessedImageField(
         upload_to="images/",
@@ -62,5 +66,3 @@ class Comment(models.Model):
         format="JPEG",
         options={"quality": 80},
     )
-
-    

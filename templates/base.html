@@ -22,6 +22,9 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'free:index' %}">자유게시판</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'articles:prof' %}">교수 소개</a>
+          </li>
         </ul>
       </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,8 +32,8 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         {% if request.user.is_authenticated %}
-        <form class="d-flex m-2" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex m-2" role="search" action="{% url 'articles:search' %}">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='search'>
           <button class="btn btn-link p-0 m-0"  type="submit">
             <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
             <lord-icon

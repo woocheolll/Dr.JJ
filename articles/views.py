@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ReviewForm, CommentForm
 from .models import Review, Comment
+from free.models import Freereview, Freecomment
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
@@ -9,44 +10,47 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 
 
-
 # from django.db.models import Q
 
 # Create your views here.
 
+def prof(request):
+    pass
+    return render(request, "articles/prof.html")
 
 def index(request):
     reviews = Review.objects.order_by("-pk")
-    context = {"reviews": reviews}
+    page = request.GET.get("page", "1")  # 페이지
+    paginator = Paginator(reviews, 6)
+    page_obj = paginator.get_page(page)
+    context = {
+        "reviews": reviews,
+        "question_list": page_obj,
+    }
     return render(request, "articles/index.html", context)
 
-
-
-
-@login_required
 
 # @login_required
 # def search(request):
 #     search = request.GET.get("search")
 #     if search:
 #         reviews = Review.objects.filter(title__contains=search) | Review.objects.filter(
-#             content__contains=search
+#             menu__contains=search
 #         )
-#         context = {
-#             "search": search,
-#             "reviews": reviews,
-#         }
+#         frees = Freereview.objects.filter(
+#             title__contains=search
+#         ) | Freereview.objects.filter(content__contains=search)
+#         context = {"search": search, "reviews": reviews, "frees": frees}
 #         return render(request, "articles/search.html", context)
 #     else:
 #         return redirect("articles:index")
-
 
 
 def search(request):
     all_data = Review.objects.order_by("-pk")
     search = request.GET.get("search", "")
     page = request.GET.get("page", "1")  # 페이지
-    paginator = Paginator(all_data, 5)
+    paginator = Paginator(all_data, 6)
     page_obj = paginator.get_page(page)
     if search:
         search_list = all_data.filter(
@@ -55,7 +59,7 @@ def search(request):
             | Q(addr__icontains=search)
             # | Q(user__icontains=search) #FK라서 검색불가
         )
-        paginator = Paginator(search_list, 5)  # 페이지당 3개씩 보여주기
+        paginator = Paginator(search_list, 6)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
             "search": search,
@@ -93,7 +97,7 @@ def create(request):
 
 
 def detail(request, review_pk):
-    grades = Comment.objects.aggregate(Avg('grade'))
+    grades = Comment.objects.aggregate(Avg("grade"))
     print(grades)
     review = Review.objects.get(pk=review_pk)
     if request.method == "POST":
@@ -110,7 +114,7 @@ def detail(request, review_pk):
         "comment_form": comment_form,
         "review": review,
         "comments": review.comment_set.all(),
-        "grades" : grades
+        "grades": grades,
     }
     return render(
         request,
@@ -180,22 +184,22 @@ def comment_create(request, pk):
             comment.review = review
             for _ in range(6):
                 if comment.grade == 0:
-                    comment.credit = 'F'
+                    comment.credit = "F"
                     break
                 elif comment.grade > 0 and comment.grade < 1.5:
-                    comment.credit = 'E+'
+                    comment.credit = "E+"
                     break
                 elif comment.grade >= 1.5 and comment.grade < 2.5:
-                    comment.credit = 'D+'
+                    comment.credit = "D+"
                     break
                 elif comment.grade >= 2.5 and comment.grade < 3.5:
-                    comment.credit = 'C+'
+                    comment.credit = "C+"
                     break
                 elif comment.grade >= 3.5 and comment.grade < 4.5:
-                    comment.credit = 'B+'
+                    comment.credit = "B+"
                     break
                 elif comment.grade >= 4.5:
-                    comment.credit = 'A+'
+                    comment.credit = "A+"
                     break
 
             comment.save()

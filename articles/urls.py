@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-
+from django.conf.urls.static import static
+from django.conf import settings
 
 app_name = "articles"
 
@@ -25,5 +26,8 @@ urlpatterns = [
     path("<int:pk>/comments/", views.comment_create, name="comment_create"),
     path("<int:review_pk>/comments/<int:comment_pk>", views.comment_detail, name="comment_detail"),
     path("<int:review_pk>/comments/<int:comment_pk>/comment_update/", views.comment_update, name="comment_update"),
+    path("prof/", views.prof, name="prof"),
 
 ]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -3,6 +3,8 @@
 
 {% block content %}
 
+
+
 <div class="container py-3">
   <!-- 상단 바-->
   <div class="d-flex align-items-center">
@@ -27,7 +29,7 @@
           <h5>Dr.JJ 보고서</h5>
           <div class="d-flex flex-column align-items-center">
             <!-- 이미지 -->
-            {% if review.image %}
+            {% if rev.image %}
             <div class="img-card2 my-2 p-1">
               <img class="img-fit2" src="{{ review.image.url }}">
             </div>
@@ -55,8 +57,9 @@
       </div>
     </div>
     {% endfor %}
-    <br>
-    <ul class="pagination justify-content-center">
+    <hr>
+     <br>
+     <ul class="pagination justify-content-center">
         <!-- 이전페이지 -->
         {% if question_list.has_previous %}
         <li class="page-item">
@@ -99,8 +102,7 @@
           <h3 class="m-0">"{{ search }}" 검색결과가 없어요</h3>
       </div>
     </div>
-    {% endif %}
+    {% endif %} 
   </div>
-</div>
-
+</div> 
 {% endblock %}

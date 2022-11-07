@@ -167,8 +167,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-MEDIA_ROOT = BASE_DIR / "images"
-MEDIA_URL = "/media/"
+# MEDIA_ROOT = BASE_DIR / "images"
+# MEDIA_URL = "/media/"
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")

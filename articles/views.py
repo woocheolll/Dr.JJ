@@ -22,6 +22,7 @@ def prof(request):
 
 def index(request):
     reviews = Review.objects.order_by("-pk")
+    all_article = Review.objects.all()
     grades = Review.objects.all().annotate(average_grade=Avg("comment_user__grade"))
     page = request.GET.get("page", "1")  # 페이지
     paginator = Paginator(reviews, 6)

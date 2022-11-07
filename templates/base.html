@@ -30,8 +30,8 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
         {% if request.user.is_authenticated %}
 
-        <form class="d-flex m-2" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="d-flex m-2" role="search" action="{% url 'articles:search' %}">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name='search'>
           <button class="btn btn-link p-0 m-0"  type="submit">
             <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
             <lord-icon

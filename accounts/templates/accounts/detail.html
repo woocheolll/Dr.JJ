@@ -80,75 +80,94 @@
       </div>
     </div>
 
-    <hr>
-
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">리뷰</button>
       </li>
       <li class="nav-item" role="presentation">
         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">자유게시판</button>
       </li>
-      <li class="nav-item" role="presentation">
-        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">좋아요</button>
     </ul>
     <div class="tab-content" id="myTabContent">
+      <!-- 아티클 -->
       <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-        <h4>아티클 글 개수 : {{ user.review_set.count }}</h4>
-        <hr>
-        {% for article in user.review_set.all %}
-        <p>
-            {{ forloop.counter }}
-            <a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
-        </p>
-        {% endfor %}
-        
-        <h4>아티클 댓글 개수 : {{ user.comment_set.count }}</h4>
-        {% for comment in user.comment_set.all %}
-        <p>
-            {{ forloop.counter }}
-            <a href="{% url 'articles:detail' comment.review_id %}">{{ comment.content }}</a>
-        </p>
-        {% endfor %}
-        <hr>
-        <h4>아티클 총 개수 :  {{ user.review_set.count|add:user.comment_set.count }} </h4>
-
+        <div class="row my-3">
+          <div class="col-12 col-md-6 d-flex flex-column">
+            <h4 class="text-center">좋아요 {{ user.like_review.count }}</h4>
+            {% for article in user.like_review.all %}
+            <div style="cursor: pointer;" onclick="location.href='{% url 'articles:detail' article.pk %}';" class="border-bottom p-1 d-flex align-items-center">
+              {% if article.image %}
+              <img class="free-img rounded border me-3" src="{{ article.image.url }}" alt="{{ article.image }}">
+              {% else %}
+              <img class="free-img rounded border me-3" src="https://dummyimage.com/200x200/000/fff.png" alt="">
+              {% endif %}
+              <div class="d-flex flex-column">
+                <p class="m-0 fw-bold">{{ article.title }}</p>
+                <p class="m-0 text-muted">{{ article.addr }}</p>
+                <p class="m-0 text-muted">{{ article.position }}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="col-12 col-md-6 d-flex flex-column">
+            <h4 class="text-center">리뷰 {{ user.comment_set.count }}</h4>
+            {% for comment in user.comment_set.all %}
+            <div style="cursor: pointer;" onclick="location.href='{% url 'articles:detail' comment.review_id %}';" class="border-bottom p-1 d-flex align-items-center">
+              {% if article.image %}
+              <img class="free-img rounded border me-3" src="{{ article.image.url }}" alt="{{ article.image }}">
+              {% else %}
+              <img class="free-img rounded border me-3" src="https://dummyimage.com/200x200/000/fff.png" alt="">
+              {% endif %}
+              <div class="d-flex flex-column">
+                <p class="m-0 fw-bold">{{ comment.content }}</p>
+                <p class="m-0 text-muted">{{ comment.review.title }}</p>
+                <p class="m-0 text-muted">{{ comment.updated_at|date:'Y-m-d' }}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
+      <!-- 자유게시판 -->
       <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-        <h4>자게 글 개수 : {{ user.freereview_set.count }}</h4>
-        {% for article in user.freereview_set.all %}
-        <p>
-            {{ forloop.counter }}
-            <a href="{% url 'free:detail' article.pk %}">{{ article.title }}</a>
-        </p>
-        {% endfor %}
-
-
-        <hr>
-        <h4>자게 댓글 개수 : {{ user.freecomment_set.count }}</h4>
-        {% for comment in user.freecomment_set.all %}
-        <p>
-            {{ forloop.counter }}
-            <a href="">{{ comment.content }}</a>
-        </p>
-        {% endfor %}
-
-        <hr>
-        <h4>자게 총 개수 :  {{ user.freereview_set.count|add:user.freecomment_set.count }} </h4>
-      </div>
-      <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-        <h4> 좋아요 개수 : {{ user.like_review.count }} </h4>       
-        {% for article in user.like_review.all %}
-        <p>
-            {{ forloop.counter }}
-            <a href="{% url 'articles:detail' article.pk %}">{{ article.title }}</a>
-        </p>
-        {% endfor %}
-        <hr>
+        <div class="row my-3">
+          <div class="col-12 col-md-6 d-flex flex-column">
+            <h4 class="text-center">게시글 {{ user.freereview_set.count }}</h4>
+            {% for article in user.freereview_set.all %}
+            <div style="cursor: pointer;" onclick="location.href='{% url 'free:detail' article.pk %}';" class="border-bottom p-1 d-flex align-items-center">
+              {% if article.image %}
+              <img class="free-img rounded border me-3" src="{{ article.image.url }}" alt="{{ article.image }}">
+              {% else %}
+              <img class="free-img rounded border me-3" src="https://dummyimage.com/200x200/000/fff.png" alt="">
+              {% endif %}
+              <div class="d-flex flex-column">
+                <p class="m-0 fw-bold">{{ article.title }}</p>
+                <p class="m-0 text-muted">{{ article.content }}</p>
+                <p class="m-0 text-muted">{{ article.updated_at|date:'Y-m-d' }}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="col-12 col-md-6 d-flex flex-column">
+            <h4 class="text-center">댓글 {{ user.freecomment_set.count }}</h4>
+            {% for comment in user.freecomment_set.all %}
+            <div style="cursor: pointer;" onclick="location.href='{% url 'free:detail' comment.free_id %}';" class="border-bottom p-1 d-flex align-items-center">
+              {% if article.image %}
+              <img class="free-img rounded border me-3" src="{{ article.image.url }}" alt="{{ article.image }}">
+              {% else %}
+              <img class="free-img rounded border me-3" src="https://dummyimage.com/200x200/000/fff.png" alt="">
+              {% endif %}
+              <div class="d-flex flex-column">
+                <p class="m-0 fw-bold">{{ comment.content }}</p>
+                <p class="m-0 text-muted">{{ comment.free.title }}</p>
+                <p class="m-0 text-muted">{{ comment.updated_at|date:'Y-m-d' }}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
-
-    <hr>
   </div>
   {% endblock %}
 

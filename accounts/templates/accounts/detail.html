@@ -113,8 +113,8 @@
             <h4 class="text-center">리뷰 {{ user.comment_set.count }}</h4>
             {% for comment in user.comment_set.all %}
             <div style="cursor: pointer;" onclick="location.href='{% url 'articles:detail' comment.review_id %}';" class="border-bottom p-1 d-flex align-items-center">
-              {% if article.image %}
-              <img class="free-img rounded border me-3" src="{{ article.image.url }}" alt="{{ article.image }}">
+              {% if comment.image %}
+              <img class="free-img rounded border me-3" src="{{ comment.image.url }}" alt="{{ comment.image }}">
               {% else %}
               <img class="free-img rounded border me-3" src="https://dummyimage.com/200x200/000/fff.png" alt="">
               {% endif %}
@@ -152,8 +152,8 @@
             <h4 class="text-center">댓글 {{ user.freecomment_set.count }}</h4>
             {% for comment in user.freecomment_set.all %}
             <div style="cursor: pointer;" onclick="location.href='{% url 'free:detail' comment.free_id %}';" class="border-bottom p-1 d-flex align-items-center">
-              {% if article.image %}
-              <img class="free-img rounded border me-3" src="{{ article.image.url }}" alt="{{ article.image }}">
+              {% if comment.free.image %}
+              <img class="free-img rounded border me-3" src="{{ comment.free.image.url }}" alt="{{ comment.free.image }}">
               {% else %}
               <img class="free-img rounded border me-3" src="https://dummyimage.com/200x200/000/fff.png" alt="">
               {% endif %}

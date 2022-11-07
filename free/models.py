@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
-class Review(models.Model):
+class Freereview(models.Model):
     title = models.CharField(max_length=50)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -22,17 +22,11 @@ class Review(models.Model):
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="like_free"
     )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="user_free_review",
-    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
-class Comment(models.Model):
+class Freecomment(models.Model):
     content = models.TextField()
     updated_at = models.DateTimeField(auto_now=True)
-    free = models.ForeignKey(Review, on_delete=models.CASCADE)
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="user_free"
-    )
+    free = models.ForeignKey(Freereview, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

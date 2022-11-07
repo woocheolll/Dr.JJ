@@ -1,10 +1,5 @@
-
-
 import django.core.validators
-
-
 from django.conf import settings
-
 from django.db import migrations, models
 import django.db.models.deletion
 import imagekit.models.fields
@@ -35,6 +30,7 @@ class Migration(migrations.Migration):
                 ('homepage', models.CharField(blank=True, max_length=40)),
 ,
 
+
                 ('image', imagekit.models.fields.ProcessedImageField(blank=True, upload_to='images/')),
                 ('like_art_users', models.ManyToManyField(related_name='like_review', to=settings.AUTH_USER_MODEL)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
@@ -46,10 +42,8 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content', models.TextField()),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-
                 ('grade', models.FloatField(validators=[django.core.validators.MinValueValidator(0.0), django.core.validators.MaxValueValidator(5.0)])),
                 ('credit', models.TextField()),
-
                 ('image', imagekit.models.fields.ProcessedImageField(blank=True, upload_to='images/')),
                 ('review', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='articles.review')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),

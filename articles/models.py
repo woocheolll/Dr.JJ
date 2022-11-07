@@ -9,7 +9,25 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 class Review(models.Model):
     title = models.CharField(max_length=80)
     addr = models.CharField(max_length=80)
-    content = models.TextField()
+    position_choices = [
+        ("한식", "한식"),
+        ("분식", "분식"),
+        ("중식", "중식"),
+        ("일식", "일식"),
+        ("양식", "양식"),
+        ("아시안", "아시안"),
+        ("카페/디저트", "카페/디저트"),
+        ("기타", None),
+    ]
+
+    position = models.CharField(
+        max_length=10,
+        choices=position_choices,
+        default="선택",
+    )
+    menu = models.TextField()
+    contact = models.CharField(max_length=14, blank=True)
+    homepage = models.CharField(max_length=40, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     x = models.CharField(max_length=80, blank=False, null=False)

@@ -43,7 +43,8 @@ def search(request):
     if search:
         search_list = all_data.filter(
             Q(title__icontains=search)
-            | Q(content__icontains=search)
+            | Q(menu__icontains=search)
+            | Q(addr__icontains=search)
             # | Q(user__icontains=search) #FK라서 검색불가
         )
         paginator = Paginator(search_list, 5)  # 페이지당 3개씩 보여주기
@@ -67,7 +68,9 @@ def create(request):
     if request.method == "POST":
         form = ReviewForm(request.POST, request.FILES)
         print(request.POST)
+        print(form.is_valid)
         if form.is_valid():
+
             temp = form.save(commit=False)
             temp.user = request.user
             temp.save()
